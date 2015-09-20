@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="background">@color/dark_grey</item>
+        <item name="colorPrimary">@color/light_grey</item>
+        <item name="android:alertDialogStyle">@style/AlertDialog_Yours</item>
+
+    </style>
+    <style name="AlertDialog_Yours">
+        <item name="android:fullDark">@color/light_grey</item>
+        <item name="android:topDark">@color/light_grey</item>
+        <item name="android:centerDark">@color/light_grey</item>
+        <item name="android:bottomDark">@color/light_grey</item>
+        <item name="android:fullBright">@color/light_grey</item>
+        <item name="android:topBright">@color/light_grey</item>
+        <item name="android:centerBright">@color/light_grey</item>
+        <item name="android:bottomBright">@color/light_grey</item>
+        <item name="android:bottomMedium">@color/light_grey</item>
+        <item name="android:centerMedium">@color/light_grey</item>
+    </style>
+
+</resources>

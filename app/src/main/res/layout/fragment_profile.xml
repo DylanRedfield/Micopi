@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/dark_grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="01"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/your_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/your_account"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="02"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/current_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="03"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="04"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="05"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="06"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="07"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="08"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="09"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/manage_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/manage_account"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="10"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/set_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/set_name"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="11"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_new"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="10"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/set_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/set_email"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_new_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="11"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="12"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/set_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/set_password"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="13"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="14"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey"
+                android:paddingLeft="8dp"
+                android:text="@string/logout"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="15"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

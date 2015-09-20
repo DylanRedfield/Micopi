@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Micopi</string>
+    <string name="invites">// Invites</string>
+    <string name="your_account">// Your Account</string>
+    <string name="manage_account">// Manage Account</string>
+    <string name="set_name">setUsername();</string>
+    <string name="set_email">setEmail();</string>
+    <string name="logout">logout();</string>
+    <string name="set_password">setPassword();</string>
+    <string name="logo">&lt;/&gt;</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">&lt;register/&gt;</string>
+    <string name="enter">Enter</string>
+</resources>
