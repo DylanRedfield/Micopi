@@ -10,8 +10,10 @@ public class Micopi extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Parse.enableLocalDatastore(this);
+
         Parse.initialize(this,
                 Keys.APPLICATION_ID, Keys.CLIENT_KEY);
-        ParseUser.enableRevocableSessionInBackground();
+        ParseUser.enableAutomaticUser();
     }
 }

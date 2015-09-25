@@ -11,4 +11,7 @@
     <string name="sign_in">Sign In</string>
     <string name="register">&lt;register/&gt;</string>
     <string name="enter">Enter</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

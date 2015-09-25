@@ -120,20 +120,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
         fab:button_color="@color/action_bar_color"
         fab:image="@drawable/ic_plus_white_36dp"
+        android:layout_marginBottom="12dp"
         fab:shadow_color="@color/dark_grey" />
-
-    <RelativeLayout
-        android:id="@+id/fab_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
 
 
 </RelativeLayout>

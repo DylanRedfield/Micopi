@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -31,6 +34,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class ProfileFragment extends Fragment {
@@ -159,9 +163,13 @@ public class ProfileFragment extends Fragment {
         mLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                logOut();
-
+                mInstalation = ParseInstallation.getCurrentInstallation();
+                mInstalation.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        logOut();
+                    }
+                });
             }
         });
     }
@@ -169,17 +177,16 @@ public class ProfileFragment extends Fragment {
 
     public void logOut() {
         mInstalation = ParseInstallation.getCurrentInstallation();
-        makeNewAnon();
 
-
+        defaultUserData();
     }
 
-    public void makeNewAnon() {
+    public void defaultUserData() {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
-            public void done(ParseUser parseUser, ParseException e) {
+            public void done(final ParseUser parseUser, ParseException e) {
                 if (e == null) {
-                    parseUser.put(Keys.USERNAME_STR, "guest_" + mCurrentUser.getObjectId());
+                    //parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
                     parseUser.put(Keys.FRIENDS_ARR, new ArrayList());
                     parseUser.put(Keys.IS_ANON_BOOL, true);
                     parseUser.put(Keys.NUMBER_OF_COMPILES, 0);
@@ -189,22 +196,19 @@ public class ProfileFragment extends Fragment {
                         @Override
                         public void done(ParseException e) {
                             ParseInstallation.getCurrentInstallation()
-                                    .put(Keys.KEY_USER, mCurrentUser);
+                                    .put(Keys.KEY_USER, parseUser);
                             ParseInstallation.getCurrentInstallation()
                                     .saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
-                                            if (e == null) {
-                                                ParseUser.logOutInBackground(new LogOutCallback() {
-                                                    @Override
-                                                    public void done(ParseException e) {
-                                                        if (e == null) {
-                                                            setText();
-                                                            getActivity().finish();
-                                                        }
-                                                    }
-                                                });
 
+                                            if (isOnline()) {
+                                                HomePagerAdapter.getAdapter(getActivity()
+                                                        .getSupportFragmentManager())
+                                                        .notifyDataSetChanged();
+
+                                            } else {
+                                                // TODO error
                                             }
                                         }
                                     });
@@ -216,6 +220,30 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
+
+
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnected();
     }
 
     public String getHtmlString(String input, String hexColor) {
@@ -264,6 +292,7 @@ public class ProfileFragment extends Fragment {
             enter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    mCurrentUser = ParseUser.getCurrentUser();
                     mCurrentUser.put(mEditing, editText.getText().toString().trim());
 
                     mProgressDialog.show();

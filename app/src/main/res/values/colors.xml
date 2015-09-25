@@ -13,6 +13,10 @@
     <color name="text_orange">#f89803</color>
     <color name="splash_background">#1c1c1c</color>
     <color name="line_number_text">#525252</color>
+    <color name="lang_pink">#9b0b46</color>
+    <color name="player_list_blue">#1fcaf8</color>
+    <color name="game_orange">#ae6300</color>
+
 
 
 </resources>

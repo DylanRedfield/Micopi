@@ -87,9 +87,9 @@ public class SplashScreenActivity extends Activity {
     public void defaultUserData() {
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
-            public void done(ParseUser parseUser, ParseException e) {
+            public void done(final ParseUser parseUser, ParseException e) {
                 if (e == null) {
-                    parseUser.put(Keys.USERNAME_STR, "guest_" + mCurrentUser.getObjectId());
+                    //parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
                     parseUser.put(Keys.FRIENDS_ARR, new ArrayList());
                     parseUser.put(Keys.IS_ANON_BOOL, true);
                     parseUser.put(Keys.NUMBER_OF_COMPILES, 0);
@@ -98,12 +98,12 @@ public class SplashScreenActivity extends Activity {
                     parseUser.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            mInstallation.put(Keys.KEY_USER, mCurrentUser);
+                            mInstallation.put(Keys.KEY_USER, parseUser);
                             mInstallation.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
-                                    Log.d("testUserData", "" + mCurrentUser.getUsername());
-                                    Log.d("testUserData", "" + mCurrentUser.getObjectId());
+                                    Log.d("testUserData", "" + parseUser.getUsername());
+                                    Log.d("testUserData", "" + parseUser.getObjectId());
                                     mPref.edit().putBoolean(Keys.IS_FIRST_TIME_STR, false).apply();
                                     Intent i = new Intent(getApplicationContext(), HomeActivity.class);
 

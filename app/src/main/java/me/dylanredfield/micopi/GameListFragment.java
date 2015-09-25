@@ -1,14 +1,11 @@
 package me.dylanredfield.micopi;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,12 +15,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.FunctionCallback;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,6 +28,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -78,7 +76,7 @@ public class GameListFragment extends Fragment {
         mActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
+
                 // send is map with "languageId"
 
                 // returns error if no lobbies open and creates one
@@ -99,9 +97,7 @@ public class GameListFragment extends Fragment {
                             @Override
                             public void done(String o, ParseException e) {
                                 if (e == null) {
-
                                     if (o.equals("wait")) {
-
                                         Log.d("CloudCall", "wait");
                                         createDialog("Lobby Found!", "The Game will start will " +
                                                 "begin when enough players have joined").show();
@@ -110,7 +106,9 @@ public class GameListFragment extends Fragment {
                                         Log.d("CloudCall", "found");
                                     }
                                 } else {
-                                    Log.d("CloudCall",  e.getMessage());
+                                    // if e No Lobbys Open
+                                    Log.d("CloudCall", e.getMessage());
+                                    createGame();
                                     // Lobby has been created
                                     createDialog("Lobby Found!", "The Game will start will " +
                                             "begin when enough players have joined").show();
@@ -118,10 +116,23 @@ public class GameListFragment extends Fragment {
                             }
                         });
 
-*/
+
             }
         });
     }
+
+    public void createGame() {
+        ParseObject game = new ParseObject(Keys.KEY_GAME);
+        game.put(Keys.IS_PUBLIC_BOOL, true);
+        game.put(Keys.HAS_STARTED_BOOL, false);
+        game.put(Keys.DESIRED_NUM_PLAYERS, 4);
+        ParseObject lang = ParseObject.createWithoutData(Keys.KEY_LANGUAGE, Keys.JAVA_ID_STR);
+        game.put(Keys.LANGUAGE_POINT, lang);
+        // invitedPlayersArr = new Array with current user with first slut
+        game.put(Keys.INVITED_PLAYERS_ARR, new ParseObject[]{mCurrentUser});
+        game.saveInBackground();
+    }
+
 
     public void queryGameList() {
         ParseQuery yourTurnQuery = ParseQuery.getQuery("GameRound");
@@ -175,6 +186,7 @@ public class GameListFragment extends Fragment {
                     for (ParseObject p : list) {
                         mQueryList.add(p);
                     }
+                    Log.d("QueryList", mQueryList.toString());
 
                     // Must sort so Invites, YoutTurn, and TheirTurn are together
                     sortQuery();
@@ -233,7 +245,7 @@ public class GameListFragment extends Fragment {
                 }
             } else {
                 // Checks if invite or lobby
-                if (p.getBoolean(Keys.IS_PUBLIC_ARR)) {
+                if (p.getBoolean(Keys.IS_PUBLIC_BOOL)) {
                     lobbyList.add(p);
                 } else {
                     List<ParseUser> playersList = p.getList(Keys.PLAYERS_ARR);
@@ -264,23 +276,55 @@ public class GameListFragment extends Fragment {
         });
         return builder.create();
     }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
+        MenuItem register = menu.findItem(R.id.register);
+        MenuItem signIn = menu.findItem(R.id.sign_in);
+
+        if (ParseAnonymousUtils.isLinked(mCurrentUser)) {
+            register.setVisible(true);
+            signIn.setVisible(true);
+        } else {
+            register.setVisible(false);
+            signIn.setVisible(false);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.sign_in:
+            case R.id.register:
                 Intent i = new Intent(getContext(), RegisterActivity.class);
                 startActivity(i);
+                //getActivity().finish();
                 return true;
+            case R.id.sign_in:
+                Intent fuckVariableNamesAmIRight = new Intent(getContext(), SignInActivity.class);
+                startActivity(fuckVariableNamesAmIRight);
             default:
                 return false;
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public class GameListAdapter extends BaseAdapter {
         private TextView mSeparator;
         private TextView mLine1;
@@ -310,57 +354,68 @@ public class GameListFragment extends Fragment {
             mLine2.setTypeface(mFont);
             if (mInvitesList.size() > 0 && position == 0) {
                 mSeparator.setVisibility(View.VISIBLE);
-                mSeparator.setText("Invites");
+                mSeparator.setText("// Invites");
             } else if (mYourTurnList.size() > 0 && position == mInvitesList.size()) {
                 mSeparator.setVisibility(View.VISIBLE);
-                mSeparator.setText("Your Turn");
+                mSeparator.setText("// Your Turn");
             } else if (mTheirTurnList.size() > 0 && position ==
                     mInvitesList.size() + mYourTurnList.size()) {
                 mSeparator.setVisibility(View.VISIBLE);
-                mSeparator.setText("Their Turn");
+                mSeparator.setText("// Their Turn");
             } else if (mLobbyList.size() > 0 && position == mInvitesList.size() +
                     mYourTurnList.size() + mTheirTurnList.size()) {
                 mSeparator.setVisibility(View.VISIBLE);
-                mSeparator.setText("Lobbies");
+                mSeparator.setText("// Lobbies");
             } else {
                 mSeparator.setVisibility(View.GONE);
             }
 
+            // 1 is "object" text
+            // 2 is playerList
+            // 3 is language
             if (mInvitesList.size() > 0 && position < mInvitesList.size()) {
                 // Invites
                 mString1 = "invite";
                 mColor1 = "" + getResources().getColor(R.color.text_green);
 
-                List<ParseUser> invitedPlayers = mFullList.get(position)
-                        .getList(Keys.INVITED_PLAYERS_ARR);
-
-                for (ParseUser p : invitedPlayers) {
-                    mString2 += p.getUsername() + ", ";
-                }
-                mString2 = mString2.substring(0, mString2.length() - 1);
-                mColor2 = "" + getResources().getColor(R.color.text_blue);
-
-                mString3 = ((ParseObject) mFullList.get(position).get(Keys.LANGUAGE_POINT))
-                        .getString(Keys.NAME_STR);
-                mColor3 = "" + getResources().getColor(R.color.login_red);
+                mString2 = getPlayersString(position, false);
+                mColor2 = "" + getResources().getColor(R.color.player_list_blue);
 
             } else if (mYourTurnList.size() > 0 && position < mInvitesList.size()
                     + mYourTurnList.size()) {
+                mString1 = "game";
+                mColor1 = "" + getResources().getColor(R.color.game_orange);
+
+                mString2 = getPlayersString(position, true);
+                mColor2 = "" + getResources().getColor(R.color.player_list_blue);
+
             } else if (mTheirTurnList.size() > 0 && position < mInvitesList.size()
                     + mYourTurnList.size() + mTheirTurnList.size()) {
+                mString1 = "game";
+                mColor1 = "" + getResources().getColor(R.color.text_orange);
+
+                mString2 = getPlayersString(position, true);
+                mColor2 = "" + getResources().getColor(R.color.player_list_blue);
             } else if (mLobbyList.size() > 0 && position < mInvitesList.size() +
                     mYourTurnList.size() + mTheirTurnList.size() + mLobbyList.size()) {
+                mString1 = "lobby";
+                mColor1 = "" + getResources().getColor(R.color.text_orange);
+
+                mString2 = getPlayersString(position, false);
+                mColor2 = "" + getResources().getColor(R.color.player_list_blue);
             } else {
-                mSeparator.setVisibility(View.GONE);
+                //mSeparator.setVisibility(View.GONE);
             }
-
+            mString3 = ((ParseObject) mFullList.get(position).get(Keys.LANGUAGE_POINT))
+                    .getString(Keys.NAME_STR);
+            mColor3 = "" + getResources().getColor(R.color.lang_pink);
             String uppercase = mString1.substring(0, 1).toUpperCase() + mString1.substring(1);
-            String line1Text = "<font color= '#" + mColor1 + "'> " + mString1 + "</font> " +
-                    "= new " + uppercase + "(<font color = '#" + mColor2 + "" +
-                    "'> " + mString2 + "</font>);";
+            String line1Text = "<font color= '" + mColor1 + "'> " + mString1 + "</font> " +
+                    "= " + uppercase + " (<font color = '" + mColor2 + "" +
+                    "'>" + mString2 + "</font>);";
 
-            String line2Text = "<font color= '#" + mColor1 + "'> " + mString1 +
-                    "</font>.lang = <font color = '#" + mColor3 + "'>\"" + mString3 + "\"</font>;";
+            String line2Text = "<font color= '" + mColor1 + "'> " + mString1 +
+                    "</font>.lang = <font color = '" + mColor3 + "'>\"" + mString3 + "\"</font>;";
             mLine1.setText(Html.fromHtml(line1Text));
             mLine2.setText(Html.fromHtml(line2Text));
 
@@ -391,6 +446,15 @@ public class GameListFragment extends Fragment {
             mYourTurnList = yourTurnList;
             mTheirTurnList = theirTurnList;
             mLobbyList = lobbyList;
+            for (ParseObject p : lobbyList) {
+                for(Object f : p.getList(Keys.INVITED_PLAYERS_ARR)) {
+                    try {
+                        ((ParseUser)f).fetchIfNeeded();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
             for (ParseObject p : mInvitesList) {
                 mFullList.add(p);
@@ -406,6 +470,21 @@ public class GameListFragment extends Fragment {
             }
         }
 
+        public String getPlayersString(int position, boolean isStarted) {
+
+            List<ParseUser> list;
+            if (!isStarted) {
+                list = mFullList.get(position).getList(Keys.INVITED_PLAYERS_ARR);
+            } else {
+                list = mFullList.get(position).getList(Keys.INVITED_PLAYERS_ARR);
+            }
+
+            for (ParseUser p : list) {
+                mString2 += p.getString(Keys.USERNAME_STR) + ", ";
+            }
+            mString2 = mString2.substring(0, mString2.length() - 2);
+            return mString2;
+        }
 
     }
 }

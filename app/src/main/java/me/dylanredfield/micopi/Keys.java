@@ -34,8 +34,9 @@ public class Keys {
     public static String PLAYERS_ARR = "players";
     public static String HAS_STARTED_BOOL = "hasStarted";
     public static String ROUNDS_ARR = "rounds";
-    public static String IS_PUBLIC_ARR = "isPublic";
+    public static String IS_PUBLIC_BOOL = "isPublic";
     public static String INVITED_PLAYERS_ARR = "invitedPlayers";
+    public static String DESIRED_NUM_PLAYERS = "desiredNumberOfPlayers";
 
     // GameRound
     public static String KEY_GAME_ROUND = "GameRound";
@@ -48,6 +49,10 @@ public class Keys {
     // Language
     public static String KEY_LANGUAGE = "Language";
     public static String NAME_STR = "name";
+    public static String PYTHON_ID_STR ="IofD71loU8";
+    public static String SWIFT_ID_STR ="5EdFnZu5pO";
+    public static String OJB_C_ID_STR ="7kNdgNs2QP";
+    public static String JAVA_ID_STR ="dwCXNgpzpC";
 
     // Submission
     public static String KEY_SUBMISSION = "Submission";

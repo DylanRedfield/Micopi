@@ -1,21 +1,24 @@
 package me.dylanredfield.micopi;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.support.v4.app.FragmentManager;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
 
 public class RegisterFragmentBasic extends Fragment {
     private View mView;
@@ -119,11 +122,14 @@ public class RegisterFragmentBasic extends Fragment {
         }
 
         mProgressDialog.show();
-        mUser.saveInBackground(new SaveCallback() {
+        mUser.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
                 mProgressDialog.dismiss();
-                if(e == null) {
+                if (e == null) {
+                    HomePagerAdapter.getAdapter(getActivity().getSupportFragmentManager())
+                            .notifyDataSetChanged();
+
                     getActivity().finish();
                 } else {
                     Helpers.showDialog("Whoops", e.getMessage(), getActivity());
