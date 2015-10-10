@@ -58,7 +58,8 @@ public class SignInActivityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 ParseUser.logInInBackground(
-                        mUsername.getText().toString(), mPassword.getText().toString(),
+                        mUsername.getText().toString().trim(),
+                        mPassword.getText().toString().trim(),
                         new LogInCallback() {
                             @Override
                             public void done(ParseUser parseUser, ParseException e) {

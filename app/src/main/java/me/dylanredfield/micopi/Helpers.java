@@ -1,6 +1,7 @@
 package me.dylanredfield.micopi;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,5 +25,14 @@ public class Helpers {
                 (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnected();
+    }
+    public static ProgressDialog showProgressDialog(String message, Context context) {
+        ProgressDialog dialog = new ProgressDialog(context);
+        dialog.setMessage(message);
+        return dialog;
+    }
+
+    public static void hideProgressDialog(ProgressDialog dialog) {
+        dialog.dismiss();
     }
 }

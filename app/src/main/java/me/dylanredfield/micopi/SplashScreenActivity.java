@@ -89,7 +89,7 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void done(final ParseUser parseUser, ParseException e) {
                 if (e == null) {
-                    //parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
+                    parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
                     parseUser.put(Keys.FRIENDS_ARR, new ArrayList());
                     parseUser.put(Keys.IS_ANON_BOOL, true);
                     parseUser.put(Keys.NUMBER_OF_COMPILES, 0);

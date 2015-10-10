@@ -1,12 +1,14 @@
 package me.dylanredfield.micopi;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +16,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,9 +33,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 
@@ -42,6 +47,7 @@ public class GameListFragment extends Fragment {
     private ActionButton mActionButton;
     private ParseUser mCurrentUser;
     private Typeface mFont;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -57,9 +63,10 @@ public class GameListFragment extends Fragment {
     }
 
     public void getDefaultValues() {
-
-
         mCurrentUser = ParseUser.getCurrentUser();
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading..");
 
         mGameListView = (ListView) mView.findViewById(R.id.game_list);
 
@@ -77,60 +84,20 @@ public class GameListFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                // send is map with "languageId"
-
-                // returns error if no lobbies open and creates one
-
-                // if joined lobby and is not 4th person will get a success string that says "wait"
-                // Show alert
-
-                // If is fourth person will create game
-                // returns back objectId of Game
-
-                HashMap<String, String> params = new HashMap<>();
-
-                Log.d("userName", mCurrentUser.getUsername());
-                // TODO change to user inputed lang objectID, using Java's to test
-                params.put("languageId", "7kNdgNs2QP");
-                ParseCloud.callFunctionInBackground(Keys.SEARCH_FOR_LOBBY_CLOUD, params,
-                        new FunctionCallback<String>() {
-                            @Override
-                            public void done(String o, ParseException e) {
-                                if (e == null) {
-                                    if (o.equals("wait")) {
-                                        Log.d("CloudCall", "wait");
-                                        createDialog("Lobby Found!", "The Game will start will " +
-                                                "begin when enough players have joined").show();
-                                    } else {
-                                        // TODO sends user to Game Screen with ObjectId extra
-                                        Log.d("CloudCall", "found");
-                                    }
-                                } else {
-                                    // if e No Lobbys Open
-                                    Log.d("CloudCall", e.getMessage());
-                                    createGame();
-                                    // Lobby has been created
-                                    createDialog("Lobby Found!", "The Game will start will " +
-                                            "begin when enough players have joined").show();
-                                }
-                            }
-                        });
-
-
+                NewGameDialog dialog = new NewGameDialog(getActivity());
+                dialog.show(getFragmentManager(), null);
             }
         });
-    }
 
-    public void createGame() {
-        ParseObject game = new ParseObject(Keys.KEY_GAME);
-        game.put(Keys.IS_PUBLIC_BOOL, true);
-        game.put(Keys.HAS_STARTED_BOOL, false);
-        game.put(Keys.DESIRED_NUM_PLAYERS, 4);
-        ParseObject lang = ParseObject.createWithoutData(Keys.KEY_LANGUAGE, Keys.JAVA_ID_STR);
-        game.put(Keys.LANGUAGE_POINT, lang);
-        // invitedPlayersArr = new Array with current user with first slut
-        game.put(Keys.INVITED_PLAYERS_ARR, new ParseObject[]{mCurrentUser});
-        game.saveInBackground();
+        mGameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), LobbyActivity.class);
+                intent.putExtra(Keys.KEY_GAME_OBJ_ID,
+                        ((ParseObject)mListAdapter.getItem(i)).getObjectId());
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -178,10 +145,14 @@ public class GameListFragment extends Fragment {
         gamesQuery.include("rounds.challenge");
         gamesQuery.include("rounds.leader");
         gamesQuery.include("rounds.winner");
+        gamesQuery.include(Keys.PLAYERS_ARR);
+        gamesQuery.include(Keys.INVITED_PLAYERS_ARR);
         gamesQuery.include("Language");
+        mProgressDialog.show();
         gamesQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                mProgressDialog.dismiss();
                 if (e == null) {
                     for (ParseObject p : list) {
                         mQueryList.add(p);
@@ -192,8 +163,7 @@ public class GameListFragment extends Fragment {
                     sortQuery();
                     mGameListView.setAdapter(mListAdapter);
                 } else {
-                    Log.d("gameQueryError", e.getMessage());
-                    Log.d("gameQueryError", e.getLocalizedMessage());
+                    Helpers.showDialog("Whoops", e.getMessage(), getActivity());
                 }
             }
         });
@@ -264,26 +234,13 @@ public class GameListFragment extends Fragment {
         mListAdapter.setList(invitesList, yourTurnList, theirTurnList, lobbyList);
     }
 
-    public AlertDialog createDialog(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        return builder.create();
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem register = menu.findItem(R.id.register);
         MenuItem signIn = menu.findItem(R.id.sign_in);
 
-        if (ParseAnonymousUtils.isLinked(mCurrentUser)) {
+        if (mCurrentUser.getBoolean(Keys.IS_ANON_BOOL)) {
             register.setVisible(true);
             signIn.setVisible(true);
         } else {
@@ -349,6 +306,10 @@ public class GameListFragment extends Fragment {
             mSeparator = (TextView) convertView.findViewById(R.id.separator);
             mLine1 = (TextView) convertView.findViewById(R.id.line_1);
             mLine2 = (TextView) convertView.findViewById(R.id.line_2);
+
+
+            LinearLayout separatorLayout = (LinearLayout) convertView.findViewById(R.id.lay_1);
+
             mSeparator.setTypeface(mFont);
             mLine1.setTypeface(mFont);
             mLine2.setTypeface(mFont);
@@ -367,9 +328,42 @@ public class GameListFragment extends Fragment {
                 mSeparator.setVisibility(View.VISIBLE);
                 mSeparator.setText("// Lobbies");
             } else {
-                mSeparator.setVisibility(View.GONE);
+                separatorLayout.setVisibility(View.GONE);
             }
 
+            TextView num1 = (TextView) convertView.findViewById(R.id.num_1);
+            TextView num2 = (TextView) convertView.findViewById(R.id.num_2);
+            TextView num3 = (TextView) convertView.findViewById(R.id.num_3);
+            TextView num4 = (TextView) convertView.findViewById(R.id.num_4);
+
+            num1.setTypeface(mFont);
+            num2.setTypeface(mFont);
+            num3.setTypeface(mFont);
+            num4.setTypeface(mFont);
+
+            if (separatorLayout.getVisibility() == View.VISIBLE) {
+                num1.setText(" " + (1 + position * 4));
+                num2.setText(" " + (2 + position * 4));
+                num3.setText(" " + (3 + position * 4));
+                num4.setText(" " + (4 + position * 4));
+            } else {
+                num2.setText(" " + (1 + position * 4));
+                num3.setText(" " + (2 + position * 4));
+                num4.setText(" " + (3 + position * 4));
+            }
+
+            if (Integer.parseInt(num1.getText().toString().trim()) > 9) {
+                num1.setText(num1.getText().toString().substring(1));
+            }
+            if (Integer.parseInt(num2.getText().toString().trim()) > 9) {
+                num2.setText(num2.getText().toString().substring(1));
+            }
+            if (Integer.parseInt(num3.getText().toString().trim()) > 9) {
+                num3.setText(num3.getText().toString().substring(1));
+            }
+            if (Integer.parseInt(num4.getText().toString().trim()) > 9) {
+                num4.setText(num4.getText().toString().substring(1));
+            }
             // 1 is "object" text
             // 2 is playerList
             // 3 is language
@@ -410,15 +404,29 @@ public class GameListFragment extends Fragment {
                     .getString(Keys.NAME_STR);
             mColor3 = "" + getResources().getColor(R.color.lang_pink);
             String uppercase = mString1.substring(0, 1).toUpperCase() + mString1.substring(1);
-            String line1Text = "<font color= '" + mColor1 + "'> " + mString1 + "</font> " +
-                    "= " + uppercase + " (<font color = '" + mColor2 + "" +
-                    "'>" + mString2 + "</font>);";
 
-            String line2Text = "<font color= '" + mColor1 + "'> " + mString1 +
-                    "</font>.lang = <font color = '" + mColor3 + "'>\"" + mString3 + "\"</font>;";
+            String line1Text = Helpers.getHtmlString(mString1, mColor1) + " = " + uppercase + " (" +
+                    Helpers.getHtmlString(mString2, mColor2) + ");";
+            String line2Text = Helpers.getHtmlString(mString1, mColor1) + ".lang = " +
+                    Helpers.getHtmlString("\"" + mString3 + "\"", mColor3) + ";";
             mLine1.setText(Html.fromHtml(line1Text));
             mLine2.setText(Html.fromHtml(line2Text));
 
+
+            // Sets the height of the linenumber background to match the layout it resides in to
+            // ensure the background is flush even on a multiline input
+            convertView.findViewById(R.id.lay_1).getViewTreeObserver()
+                    .addOnPreDrawListener(new LineNumberSetHeightListner(num1,
+                            (LinearLayout) convertView.findViewById(R.id.lay_1)));
+            convertView.findViewById(R.id.lay_2).getViewTreeObserver()
+                    .addOnPreDrawListener(new LineNumberSetHeightListner(num2,
+                            (LinearLayout) convertView.findViewById(R.id.lay_2)));
+            convertView.findViewById(R.id.lay_3).getViewTreeObserver()
+                    .addOnPreDrawListener(new LineNumberSetHeightListner(num3,
+                            (LinearLayout) convertView.findViewById(R.id.lay_3)));
+            convertView.findViewById(R.id.lay_4).getViewTreeObserver()
+                    .addOnPreDrawListener(new LineNumberSetHeightListner(num4,
+                            (LinearLayout) convertView.findViewById(R.id.lay_4)));
             return convertView;
         }
 
@@ -446,15 +454,6 @@ public class GameListFragment extends Fragment {
             mYourTurnList = yourTurnList;
             mTheirTurnList = theirTurnList;
             mLobbyList = lobbyList;
-            for (ParseObject p : lobbyList) {
-                for(Object f : p.getList(Keys.INVITED_PLAYERS_ARR)) {
-                    try {
-                        ((ParseUser)f).fetchIfNeeded();
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
 
             for (ParseObject p : mInvitesList) {
                 mFullList.add(p);
@@ -471,6 +470,7 @@ public class GameListFragment extends Fragment {
         }
 
         public String getPlayersString(int position, boolean isStarted) {
+            mString2 = "";
 
             List<ParseUser> list;
             if (!isStarted) {
@@ -483,8 +483,11 @@ public class GameListFragment extends Fragment {
                 mString2 += p.getString(Keys.USERNAME_STR) + ", ";
             }
             mString2 = mString2.substring(0, mString2.length() - 2);
+            Log.d("playerStringTest", mString2);
             return mString2;
         }
 
     }
+
+
 }

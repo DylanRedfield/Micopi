@@ -71,4 +71,5 @@ public class Keys {
     // Other
     public static int USERNAME_LENGTH = 16;
     public static int EMAIL_LENGTH = 254;
+    public static String KEY_GAME_OBJ_ID = "me.dylanredfield.micopi.OBJ_ID_EXTRA";
 }

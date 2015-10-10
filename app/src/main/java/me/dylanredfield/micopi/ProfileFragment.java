@@ -182,11 +182,12 @@ public class ProfileFragment extends Fragment {
     }
 
     public void defaultUserData() {
+        mProgressDialog.show();
         ParseAnonymousUtils.logIn(new LogInCallback() {
             @Override
             public void done(final ParseUser parseUser, ParseException e) {
                 if (e == null) {
-                    //parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
+                    parseUser.put(Keys.USERNAME_STR, "guest_" + parseUser.getObjectId());
                     parseUser.put(Keys.FRIENDS_ARR, new ArrayList());
                     parseUser.put(Keys.IS_ANON_BOOL, true);
                     parseUser.put(Keys.NUMBER_OF_COMPILES, 0);
@@ -195,34 +196,32 @@ public class ProfileFragment extends Fragment {
                     parseUser.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            ParseInstallation.getCurrentInstallation()
-                                    .put(Keys.KEY_USER, parseUser);
-                            ParseInstallation.getCurrentInstallation()
-                                    .saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-
-                                            if (isOnline()) {
-                                                HomePagerAdapter.getAdapter(getActivity()
-                                                        .getSupportFragmentManager())
-                                                        .notifyDataSetChanged();
-
-                                            } else {
-                                                // TODO error
-                                            }
-                                        }
-                                    });
-
+                            if (e == null) {
+                                if (e == null) {
+                                    HomePagerAdapter.getAdapter(getActivity()
+                                            .getSupportFragmentManager())
+                                            .notifyDataSetChanged();
+                                    mProgressDialog.dismiss();
+                                }
+                            } else {
+                                mProgressDialog.dismiss();
+                                Helpers.showDialog(
+                                        "Whoops",
+                                        e.getMessage(),
+                                        getActivity());
+                            }
                         }
                     });
                 } else {
-                    Log.d("AnonError", e.getMessage());
+                    mProgressDialog.dismiss();
+                    Helpers.showDialog("Whoops", e.getMessage(), getActivity());
                 }
             }
         });
 
 
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
@@ -237,13 +236,6 @@ public class ProfileFragment extends Fragment {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
     }
 
     public String getHtmlString(String input, String hexColor) {
