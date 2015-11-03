@@ -1,28 +1,26 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.fragment;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.support.v4.app.FragmentManager;
-import android.widget.TextView;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
+
+import me.dylanredfield.micopi.R;
+import me.dylanredfield.micopi.ui.HomePagerAdapter;
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.util.Keys;
 
 
 public class RegisterFragmentBasic extends Fragment {

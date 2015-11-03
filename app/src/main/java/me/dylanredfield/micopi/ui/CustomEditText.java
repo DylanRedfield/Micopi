@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

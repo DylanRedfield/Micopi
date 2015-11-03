@@ -1,33 +1,22 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.LogOutCallback;
-import com.parse.Parse;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -36,6 +25,11 @@ import com.parse.SaveCallback;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.ui.HomePagerAdapter;
+import me.dylanredfield.micopi.util.Keys;
+import me.dylanredfield.micopi.R;
 
 public class ProfileFragment extends Fragment {
     private View mView;

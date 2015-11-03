@@ -1,9 +1,11 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.activity;
 
 import android.os.Bundle;
-import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+
+import me.dylanredfield.micopi.ui.HomePagerAdapter;
+import me.dylanredfield.micopi.R;
 
 public class HomeActivity extends ActionBarActivity {
     HomePagerAdapter mAdapter;

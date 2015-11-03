@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Micopi</string>
+    <string name="no_friends">friends.size() == 0</string>
     <string name="invites">// Invites</string>
     <string name="your_account">// Your Account</string>
     <string name="manage_account">// Manage Account</string>

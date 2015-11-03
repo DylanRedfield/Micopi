@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,9 +25,13 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import me.dylanredfield.micopi.R;
+import me.dylanredfield.micopi.ui.SelectLangListAdapter;
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.util.Keys;
 
 public class NewGameDialog extends DialogFragment {
 
@@ -40,6 +44,7 @@ public class NewGameDialog extends DialogFragment {
     private Activity mActivity;
     private ProgressDialog mProgressDialog;
 
+    //TODO fix
     public NewGameDialog(Activity activity) {
         mActivity = activity;
     }
@@ -136,6 +141,31 @@ public class NewGameDialog extends DialogFragment {
         params.put("languageId", langId);
         mProgressDialog.show();
         ParseCloud.callFunctionInBackground(Keys.SEARCH_FOR_LOBBY_CLOUD, params,
+                new FunctionCallback<HashMap<String, Object>>() {
+
+                    @Override
+                    public void done(HashMap<String, Object> stringObjectHashMap, ParseException e) {
+                        String message = "";
+                        if (stringObjectHashMap != null) {
+                            message = (String) stringObjectHashMap.get("message");
+                        }
+                        if (message.equals("Joined Lobby")) {
+                            Helpers.showDialog("Lobby Found!", "The Game will " +
+                                    "start will begin when enough players have " +
+                                    "joined", mActivity);
+                            dismiss();
+                        } else if (message.equals("Game Started")) {
+                            // TODO game found and started
+                            // Send to game screen with objectId in the "game" key
+                        } else if (e != null && e.getMessage().equals("None Open")) {
+                            createGame(langId);
+                        } else if (e != null) {
+                            Helpers.showDialog("Whoops", e.getMessage(), mActivity);
+                        }
+                    }
+                });
+
+        ParseCloud.callFunctionInBackground(Keys.SEARCH_FOR_LOBBY_CLOUD, params,
                 new FunctionCallback<String>() {
                     @Override
                     public void done(String o, ParseException e) {
@@ -179,7 +209,7 @@ public class NewGameDialog extends DialogFragment {
         ParseObject lang = ParseObject.createWithoutData(Keys.KEY_LANGUAGE, langId);
         game.put(Keys.LANGUAGE_POINT, lang);
         // invitedPlayersArr = new Array with current user with first slut
-        game.add(Keys.INVITED_PLAYERS_ARR, mCurrentUser);
+        game.add(Keys.PLAYERS_ARR, mCurrentUser);
         game.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

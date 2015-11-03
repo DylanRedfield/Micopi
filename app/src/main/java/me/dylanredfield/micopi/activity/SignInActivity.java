@@ -1,9 +1,11 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import me.dylanredfield.micopi.R;
 
 
 public class SignInActivity extends ActionBarActivity {

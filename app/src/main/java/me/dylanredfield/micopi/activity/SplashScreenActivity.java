@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +20,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.util.Keys;
+import me.dylanredfield.micopi.R;
 
 public class SplashScreenActivity extends Activity {
     private Typeface mFont;

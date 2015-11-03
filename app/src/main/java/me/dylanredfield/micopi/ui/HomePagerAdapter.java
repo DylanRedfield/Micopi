@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
 import com.parse.ParseUser;
+
+import me.dylanredfield.micopi.util.Keys;
+import me.dylanredfield.micopi.fragment.GameListFragment;
+import me.dylanredfield.micopi.fragment.ProfileFragment;
 
 public class HomePagerAdapter extends FragmentPagerAdapter {
     private static HomePagerAdapter mAdapter;

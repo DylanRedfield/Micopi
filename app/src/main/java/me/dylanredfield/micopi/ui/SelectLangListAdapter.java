@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.ui;
 
 import android.app.Activity;
 import android.graphics.Typeface;
@@ -7,12 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.List;
+
+import me.dylanredfield.micopi.util.Keys;
+import me.dylanredfield.micopi.R;
 
 public class SelectLangListAdapter extends BaseAdapter {
     private List<ParseObject> mLangList;

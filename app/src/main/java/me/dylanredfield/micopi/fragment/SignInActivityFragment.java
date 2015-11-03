@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.fragment;
 
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.ui.HomePagerAdapter;
+import me.dylanredfield.micopi.R;
 
 
 public class SignInActivityFragment extends Fragment {

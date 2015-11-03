@@ -1,14 +1,11 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.fragment;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
@@ -24,19 +20,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
-import com.parse.FunctionCallback;
-import com.parse.ParseAnonymousUtils;
-import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import me.dylanredfield.micopi.activity.LobbyActivity;
+import me.dylanredfield.micopi.activity.RegisterActivity;
+import me.dylanredfield.micopi.activity.SignInActivity;
+import me.dylanredfield.micopi.util.Helpers;
+import me.dylanredfield.micopi.util.Keys;
+import me.dylanredfield.micopi.listener.LineNumberSetHeightListner;
+import me.dylanredfield.micopi.R;
 
 
 public class GameListFragment extends Fragment {
@@ -67,6 +67,7 @@ public class GameListFragment extends Fragment {
 
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setMessage("Loading..");
+        mProgressDialog.setCancelable(false);
 
         mGameListView = (ListView) mView.findViewById(R.id.game_list);
 
@@ -93,8 +94,8 @@ public class GameListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), LobbyActivity.class);
-                intent.putExtra(Keys.KEY_GAME_OBJ_ID,
-                        ((ParseObject)mListAdapter.getItem(i)).getObjectId());
+                intent.putExtra(Keys.EXTRA_GAME_OBJ_ID,
+                        ((ParseObject) mListAdapter.getItem(i)).getObjectId());
                 startActivity(intent);
             }
         });
@@ -130,12 +131,17 @@ public class GameListFragment extends Fragment {
         gameQuery5.whereEqualTo("hasStarted", false);
         gameQuery5.whereEqualTo("inviteStarter", mCurrentUser);
 
+        ParseQuery gameQuery6 = ParseQuery.getQuery("Game");
+        gameQuery5.whereEqualTo("hasStarted", false);
+        gameQuery5.whereEqualTo("players", mCurrentUser);
+
         ArrayList<ParseQuery<ParseObject>> params = new ArrayList<>();
         params.add(gameQuery1);
         params.add(gameQuery2);
         params.add(gameQuery3);
         params.add(gameQuery4);
         params.add(gameQuery5);
+        params.add(gameQuery6);
 
         ParseQuery<ParseObject> gamesQuery = ParseQuery.or(params);
         gamesQuery.orderByDescending("updatedAt");
@@ -213,24 +219,35 @@ public class GameListFragment extends Fragment {
                         theirTurnList.add(p);
                     }
                 }
-            } else {
-                // Checks if invite or lobby
-                if (p.getBoolean(Keys.IS_PUBLIC_BOOL)) {
-                    lobbyList.add(p);
-                } else {
-                    List<ParseUser> playersList = p.getList(Keys.PLAYERS_ARR);
+            } else if (p.getBoolean(Keys.IS_INVITE_BOOL)) {
+                List<String> stringList = new ArrayList<>();
+                for (Object po : p.getList(Keys.PLAYERS_ARR)) {
+                    stringList.add(((ParseObject) po).getObjectId());
+                }
 
-                    for (int i = 0; i < playersList.size(); i++) {
-                        if (playersList.get(i).getObjectId()
-                                .equals(mCurrentUser.getObjectId())) {
-                            invitesList.add(p);
-                        } else if (i == playersList.size() - 1) {
-                            lobbyList.add(p);
-                        }
+                boolean isLobby = false;
+                for (String s : stringList) {
+                    if (s.equals(mCurrentUser.getObjectId()) ||
+                            ((ParseObject) p.get(Keys.INVITE_STARTER_POINT)).getObjectId()
+                                    .equals(mCurrentUser.getObjectId())) {
+                        isLobby = true;
+                        lobbyList.add(p);
                     }
                 }
+                if (!isLobby) {
+                    // Is invite
+                    invitesList.add(p);
+                }
+
+            } else {
+                // is Lobby
+                lobbyList.add(p);
             }
         }
+        Log.d("SortLog", invitesList.toString() + "\n" +
+                yourTurnList.toString() + "\n" +
+                theirTurnList.toString() + "\n" +
+                lobbyList.toString() + "\n");
         mListAdapter.setList(invitesList, yourTurnList, theirTurnList, lobbyList);
     }
 
@@ -372,7 +389,7 @@ public class GameListFragment extends Fragment {
                 mString1 = "invite";
                 mColor1 = "" + getResources().getColor(R.color.text_green);
 
-                mString2 = getPlayersString(position, false);
+                mString2 = getPlayersString(position, true);
                 mColor2 = "" + getResources().getColor(R.color.player_list_blue);
 
             } else if (mYourTurnList.size() > 0 && position < mInvitesList.size()
@@ -380,7 +397,7 @@ public class GameListFragment extends Fragment {
                 mString1 = "game";
                 mColor1 = "" + getResources().getColor(R.color.game_orange);
 
-                mString2 = getPlayersString(position, true);
+                mString2 = getPlayersString(position, false);
                 mColor2 = "" + getResources().getColor(R.color.player_list_blue);
 
             } else if (mTheirTurnList.size() > 0 && position < mInvitesList.size()
@@ -388,7 +405,7 @@ public class GameListFragment extends Fragment {
                 mString1 = "game";
                 mColor1 = "" + getResources().getColor(R.color.text_orange);
 
-                mString2 = getPlayersString(position, true);
+                mString2 = getPlayersString(position, false);
                 mColor2 = "" + getResources().getColor(R.color.player_list_blue);
             } else if (mLobbyList.size() > 0 && position < mInvitesList.size() +
                     mYourTurnList.size() + mTheirTurnList.size() + mLobbyList.size()) {
@@ -469,14 +486,14 @@ public class GameListFragment extends Fragment {
             }
         }
 
-        public String getPlayersString(int position, boolean isStarted) {
+        public String getPlayersString(int position, boolean isInvite) {
             mString2 = "";
 
             List<ParseUser> list;
-            if (!isStarted) {
+            if (isInvite) {
                 list = mFullList.get(position).getList(Keys.INVITED_PLAYERS_ARR);
             } else {
-                list = mFullList.get(position).getList(Keys.INVITED_PLAYERS_ARR);
+                list = mFullList.get(position).getList(Keys.PLAYERS_ARR);
             }
 
             for (ParseUser p : list) {

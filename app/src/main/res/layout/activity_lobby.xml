@@ -5,7 +5,8 @@
     android:orientation="vertical">
     <fragment
         android:layout_width="match_parent"
+        android:id="@+id/frag"
         android:layout_height="match_parent"
-        android:name="me.dylanredfield.micopi.LobbyFragment"/>
+        android:name="me.dylanredfield.micopi.fragment.LobbyFragment"/>
 
 </LinearLayout>

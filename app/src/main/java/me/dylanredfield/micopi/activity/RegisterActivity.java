@@ -1,7 +1,9 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+
+import me.dylanredfield.micopi.R;
 
 public class RegisterActivity extends ActionBarActivity {
     @Override

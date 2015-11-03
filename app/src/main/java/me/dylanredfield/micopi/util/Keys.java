@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi;
+package me.dylanredfield.micopi.util;
 
 public class Keys {
 
@@ -37,6 +37,15 @@ public class Keys {
     public static String IS_PUBLIC_BOOL = "isPublic";
     public static String INVITED_PLAYERS_ARR = "invitedPlayers";
     public static String DESIRED_NUM_PLAYERS = "desiredNumberOfPlayers";
+    public static String NUM_PLAYERS_NUM = "numPlayers";
+    public static String GAME_DIFFICULTY_POINT = "GameDifficulty";
+    public static String IS_INVITE_BOOL = "isInvite";
+    public static String INVITE_STARTER_POINT = "inviteStarter";
+
+    // GameDifficulty
+    public static String KEY_GAME_DIFFICULTY = "GameDifficulty";
+    public static String EASY_OBJECT_ID = "QYOXPi8grU";
+
 
     // GameRound
     public static String KEY_GAME_ROUND = "GameRound";
@@ -71,5 +80,5 @@ public class Keys {
     // Other
     public static int USERNAME_LENGTH = 16;
     public static int EMAIL_LENGTH = 254;
-    public static String KEY_GAME_OBJ_ID = "me.dylanredfield.micopi.OBJ_ID_EXTRA";
+    public static String EXTRA_GAME_OBJ_ID = "me.dylanredfield.micopi.OBJ_ID_EXTRA";
 }
