@@ -165,42 +165,7 @@ public class NewGameDialog extends DialogFragment {
                     }
                 });
 
-        ParseCloud.callFunctionInBackground(Keys.SEARCH_FOR_LOBBY_CLOUD, params,
-                new FunctionCallback<String>() {
-                    @Override
-                    public void done(String o, ParseException e) {
-                        if (e == null) {
-                            if (o.equals("wait")) {
-                                Log.d("CloudCall", "wait");
-                                Helpers.showDialog("Lobby Found!", "The Game will " +
-                                        "start will begin when enough players have " +
-                                        "joined", mActivity);
-                                dismiss();
-                            } else {
-                                // TODO sends user to Game Screen with ObjectId extra
-                                Log.d("CloudCall", "found");
-                                dismiss();
-                            }
-                        } else {
-                            // if e No Lobbys Opens
-                            // TODO correct error handling
-                            //createGame();
-                            Log.d("SearchForLobby Error: ", e.getMessage());
-                            if (e.getMessage().equals("No Lobbys Open")) {
-
-                                createGame(langId);
-                                // Lobby has been created
-
-                            } else {
-                                Helpers.showDialog("Whoops", e.getMessage(), getActivity());
-                                dismiss();
-                                mProgressDialog.dismiss();
-                            }
-                        }
-                    }
-                });
     }
-
     public void createGame(String langId) {
         ParseObject game = new ParseObject(Keys.KEY_GAME);
         game.put(Keys.IS_PUBLIC_BOOL, true);
