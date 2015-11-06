@@ -80,29 +80,16 @@ public class FriendsFragment extends Fragment {
     }
 
     public void queryParse() {
+        // TODO speed this query up by doing async
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
         for (int i = 0; i < mFriendsList.size(); i++) {
             if (i == mFriendsList.size() - 1) {
-                mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                mFriendsList.get(i).fetchInBackground(new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject parseObject, ParseException e) {
-                        ParseQuery<ParseObject> inviteQuery = ParseQuery.getQuery(Keys.KEY_FRIEND_REQUEST);
-                        inviteQuery.whereEqualTo(Keys.TO_USER_POINT, mCurrentUser);
-                        inviteQuery.include(Keys.FROM_USER_POINT);
-                        inviteQuery.findInBackground(new FindCallback<ParseObject>() {
-                            @Override
-                            public void done(List<ParseObject> list2, ParseException e) {
-                                if (e == null) {
-                                    mFullList.addAll(list2);
-                                    mFullList.addAll(mFriendsList);
-                                    mAdapter = new FriendsAdapter(mFragment);
-                                    mListView.setAdapter(mAdapter);
+                        Log.d("fetchInBackground", "true");
+                        inviteQuery();
 
-                                } else {
-                                    Log.d("FuckTest", e.getMessage());
-                                }
-                            }
-                        });
                     }
                 });
             } else {
@@ -110,6 +97,30 @@ public class FriendsFragment extends Fragment {
             }
         }
 
+        if (mFriendsList.size() == 0) {
+            inviteQuery();
+        }
+
+    }
+
+    public void inviteQuery() {
+        ParseQuery<ParseObject> inviteQuery = ParseQuery.getQuery(Keys.KEY_FRIEND_REQUEST);
+        inviteQuery.whereEqualTo(Keys.TO_USER_POINT, mCurrentUser);
+        inviteQuery.include(Keys.FROM_USER_POINT);
+        inviteQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list2, ParseException e) {
+                if (e == null) {
+                    mFullList.addAll(list2);
+                    mFullList.addAll(mFriendsList);
+                    mAdapter = new FriendsAdapter(mFragment);
+                    mListView.setAdapter(mAdapter);
+
+                } else {
+                    Log.d("FuckTest", e.getMessage());
+                }
+            }
+        });
     }
 
     public void setListeners() {

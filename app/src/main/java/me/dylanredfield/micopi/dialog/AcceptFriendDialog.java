@@ -34,7 +34,6 @@ public class AcceptFriendDialog extends DialogFragment {
     private TextView mLabel;
     private Button mAccept;
     private Button mDecline;
-    private Bundle mExtras;
 
     // TODO fix
     public AcceptFriendDialog(Activity activity) {
@@ -43,7 +42,6 @@ public class AcceptFriendDialog extends DialogFragment {
 
 
     public void setArguments(Bundle extras) {
-        mExtras = extras;
     }
 
     @Override
@@ -80,12 +78,12 @@ public class AcceptFriendDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 ParseUser.getCurrentUser().add(Keys.FRIENDS_ARR, ParseObject.createWithoutData(Keys.KEY_USER,
-                        mExtras.getString(Keys.EXTRA_GAME_OBJ_ID)));
+                        getArguments().getString(Keys.EXTRA_GAME_OBJ_ID)));
                 ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put("fromUserId", mExtras.getString(Keys.EXTRA_GAME_OBJ_ID));
+                        params.put("fromUserId", getArguments().getString(Keys.EXTRA_GAME_OBJ_ID));
                         ParseCloud.callFunctionInBackground("handleFriendRequest", params,
                                 new FunctionCallback<String>() {
                                     @Override
@@ -93,9 +91,10 @@ public class AcceptFriendDialog extends DialogFragment {
                                                      ParseException e) {
                                         if (e == null) {
                                             dismiss();
+
                                         } else {
                                             Log.d("Accept error",
-                                                    mExtras.getString(Keys.EXTRA_GAME_OBJ_ID));
+                                                    getArguments().getString(Keys.EXTRA_GAME_OBJ_ID));
                                         }
 
                                     }

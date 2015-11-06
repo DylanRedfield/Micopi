@@ -182,7 +182,7 @@ public class NewGameDialog extends DialogFragment {
                                 dismiss();
                             }
                         } else {
-                            // if e No Lobbys Open
+                            // if e No Lobbys Opens
                             // TODO correct error handling
                             //createGame();
                             Log.d("SearchForLobby Error: ", e.getMessage());

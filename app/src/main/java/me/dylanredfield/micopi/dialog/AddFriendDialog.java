@@ -133,8 +133,10 @@ public class AddFriendDialog extends DialogFragment {
                 ParseQuery<ParseUser> query = new ParseQuery<>(Keys.KEY_USER);
                 query.whereContains(Keys.USERNAME_STR, editText.getText().toString()
                         .trim().toLowerCase());
-                /*query.whereNotEqualTo(Keys.OBJECT_ID_STR,
-                        getArguments().getStringArrayList(Keys.EXTRA_FRIENDS_LIST));*/
+                query.whereNotContainedIn(Keys.OBJECT_ID_STR,
+                        getArguments().getStringArrayList(Keys.EXTRA_FRIENDS_LIST));
+                query.whereNotEqualTo(Keys.OBJECT_ID_STR, ParseUser.getCurrentUser()
+                        .getObjectId());
                 query.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> list, ParseException e) {

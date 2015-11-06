@@ -3,130 +3,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dark_grey"
-    android:gravity="center"
-    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/default_layout"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/splash_background"
-            android:gravity="center"
-            android:padding="12dp"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-
-        <Button
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/round_courner_rect"
-            android:paddingBottom="4dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:text="@string/search_by_username"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/facebook"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/round_courner_rect"
-            android:paddingBottom="4dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:text="@string/find_on_facebook"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-        <Button
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/round_courner_rect"
-            android:paddingBottom="4dp"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
-            android:paddingTop="4dp"
-            android:text="@string/invite_via_message"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/username_search_layout"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@color/dark_grey"
         android:gravity="center"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/label_select_lang"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/splash_background"
-            android:gravity="center"
-            android:padding="12dp"
-            android:layout_weight="0"
-            android:text="@string/search_label"
-            android:textColor="@color/white"
-            android:textSize="22sp" />
-        <ListView
-            android:id="@+id/select_user_list"
-            android:layout_width="wrap_content"
-            android:paddingBottom="20dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:dividerHeight="0dp"/>
 
         <LinearLayout
-            android:gravity="center_vertical"
+            android:id="@+id/default_layout"
             android:layout_width="match_parent"
-            android:padding="6dp"
-            android:layout_weight="0"
-            android:background="@color/splash_background"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/enter_username"
-                android:background="@color/light_grey"
-                android:padding="4dp"
+            <TextView
+                android:id="@+id/label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/splash_background"
+                android:gravity="center"
+                android:padding="12dp"
                 android:textColor="@color/white"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageButton
-                android:id="@+id/search"
-                android:layout_weight="0"
-                android:background="@android:color/transparent"
-                android:src="@drawable/magnify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:textSize="22sp" />
 
+            <Button
+                android:id="@+id/username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_courner_rect"
+                android:paddingBottom="4dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/search_by_username"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_courner_rect"
+                android:paddingBottom="4dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/find_on_facebook"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/round_courner_rect"
+                android:paddingBottom="4dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:text="@string/invite_via_message"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/username_search_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/label_select_lang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/splash_background"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/search_label"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <ListView
+                android:id="@+id/select_user_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:dividerHeight="0dp"
+                android:paddingBottom="20dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="@color/splash_background"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <EditText
+                    android:id="@+id/enter_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/light_grey"
+                    android:padding="4dp"
+                    android:textColor="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/magnify" />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </LinearLayout>

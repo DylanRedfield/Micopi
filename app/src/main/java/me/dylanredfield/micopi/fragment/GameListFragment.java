@@ -55,6 +55,7 @@ public class GameListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_game_list, container, false);
         setHasOptionsMenu(true);
+        Log.d("GameList", "OnCreateView");
         getDefaultValues();
         setListeners();
         setEmptyList();
@@ -156,7 +157,7 @@ public class GameListFragment extends Fragment {
         gamesQuery.include(Keys.PLAYERS_ARR);
         gamesQuery.include(Keys.INVITED_PLAYERS_ARR);
         gamesQuery.include("Language");
-        mProgressDialog.show();
+        //mProgressDialog.show();
         gamesQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -282,22 +283,6 @@ public class GameListFragment extends Fragment {
                 startActivity(fuckVariableNamesAmIRight);
             default:
                 return false;
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
         }
     }
 
