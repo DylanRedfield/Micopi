@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,6 +147,22 @@ public class AddFriendDialog extends DialogFragment {
                         } else {
                             Helpers.showDialog("Whoops", "" + e.getCode(), getActivity());
                         }
+                    }
+                });
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                ParseObject friendRequest = ParseObject.create(Keys.KEY_FRIEND_REQUEST);
+                friendRequest.put(Keys.FROM_USER_POINT, ParseUser.getCurrentUser());
+                friendRequest.put(Keys.TO_USER_POINT, mSearchList.get(i));
+                friendRequest.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        // TODO handle errors and shii
+                        dismiss();
                     }
                 });
             }
