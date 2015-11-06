@@ -33,6 +33,7 @@ import java.util.List;
 import me.dylanredfield.micopi.activity.LobbyActivity;
 import me.dylanredfield.micopi.activity.RegisterActivity;
 import me.dylanredfield.micopi.activity.SignInActivity;
+import me.dylanredfield.micopi.dialog.NewGameDialog;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
 import me.dylanredfield.micopi.listener.LineNumberSetHeightListner;
@@ -104,7 +105,8 @@ public class GameListFragment extends Fragment {
 
     public void queryGameList() {
         ParseQuery yourTurnQuery = ParseQuery.getQuery("GameRound");
-        //TODO handle users
+
+        //TODO handle users names
         yourTurnQuery.whereEqualTo("playerNotDone", mCurrentUser);
 
         ParseQuery<ParseObject> notYourTurnQuery = ParseQuery.getQuery("GameRound");
@@ -132,8 +134,8 @@ public class GameListFragment extends Fragment {
         gameQuery5.whereEqualTo("inviteStarter", mCurrentUser);
 
         ParseQuery gameQuery6 = ParseQuery.getQuery("Game");
-        gameQuery5.whereEqualTo("hasStarted", false);
-        gameQuery5.whereEqualTo("players", mCurrentUser);
+        gameQuery6.whereEqualTo("hasStarted", false);
+        gameQuery6.whereEqualTo("players", mCurrentUser);
 
         ArrayList<ParseQuery<ParseObject>> params = new ArrayList<>();
         params.add(gameQuery1);

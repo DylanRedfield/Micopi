@@ -15,7 +15,15 @@
     <string name="find_game">findGame()</string>
     <string name="language_label">setLanguage()</string>
     <string name="invite_friends">inviteFriends()</string>
-    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="accept">accept()</string>
+    <string name="decline">decline()</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="remove_player">removePlayer()</string>
+    <string name="delete_lobby">deleteLobby()</string>
+    <string name="title_activity_sign_in">SignInActivity</string>
+    <string name="search_by_username">searchByUsername()</string>
+    <string name="find_on_facebook">findOnFacebook()</string>
+    <string name="invite_via_message">inviteViaMessage()</string>
+    <string name="search_label">//search</string>
 </resources>

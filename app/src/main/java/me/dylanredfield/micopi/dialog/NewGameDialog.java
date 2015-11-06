@@ -1,4 +1,4 @@
-package me.dylanredfield.micopi.fragment;
+package me.dylanredfield.micopi.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -78,7 +78,7 @@ public class NewGameDialog extends DialogFragment {
         mLabel.setTypeface(mFont);
         mFindGame.setTypeface(mFont);
         mInviteFriends.setTypeface(mFont);
-        mLabel.setText("new Game()");
+        mLabel.setText("// NewGame");
 
         mProgressDialog = new ProgressDialog(mActivity);
         mProgressDialog.setMessage("Loading...");
@@ -204,8 +204,13 @@ public class NewGameDialog extends DialogFragment {
     public void createGame(String langId) {
         ParseObject game = new ParseObject(Keys.KEY_GAME);
         game.put(Keys.IS_PUBLIC_BOOL, true);
+        game.put(Keys.IS_OVER_BOOL, false);
         game.put(Keys.HAS_STARTED_BOOL, false);
         game.put(Keys.DESIRED_NUM_PLAYERS, 4);
+        game.put(Keys.NUM_PLAYERS_NUM, 1);
+        game.put(Keys.IS_INVITE_BOOL, false);
+        game.put(Keys.GAME_DIFFICULTY_POINT,
+                ParseObject.createWithoutData(Keys.KEY_GAME_DIFFICULTY, Keys.EASY_OBJECT_ID));
         ParseObject lang = ParseObject.createWithoutData(Keys.KEY_LANGUAGE, langId);
         game.put(Keys.LANGUAGE_POINT, lang);
         // invitedPlayersArr = new Array with current user with first slut

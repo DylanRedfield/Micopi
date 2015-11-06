@@ -7,6 +7,7 @@ import android.support.v4.view.PagerAdapter;
 
 import com.parse.ParseUser;
 
+import me.dylanredfield.micopi.fragment.FriendsFragment;
 import me.dylanredfield.micopi.util.Keys;
 import me.dylanredfield.micopi.fragment.GameListFragment;
 import me.dylanredfield.micopi.fragment.ProfileFragment;
@@ -33,6 +34,9 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
             case 1:
                 fragment = new ProfileFragment();
                 break;
+            case 2:
+                fragment = new FriendsFragment();
+
         }
         return fragment;
     }
@@ -42,7 +46,7 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
         if (ParseUser.getCurrentUser().getBoolean(Keys.IS_ANON_BOOL)) {
             return 1;
         } else {
-            return 2;
+            return 3;
         }
     }
     @Override
@@ -57,6 +61,8 @@ public class HomePagerAdapter extends FragmentPagerAdapter {
                 return "<Games/>";
             case 1:
                 return "<Profile/>";
+            case 2:
+                return "<Friends/>";
         }
         return "test";
     }

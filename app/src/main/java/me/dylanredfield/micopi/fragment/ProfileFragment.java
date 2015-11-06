@@ -236,6 +236,7 @@ public class ProfileFragment extends Fragment {
         return "<font color = '" + hexColor + "'>" + input + "</font>";
     }
 
+    // TODO fix to static
     public class EditDataDialogFragment extends DialogFragment {
         private String mEditing;
         private View mView;

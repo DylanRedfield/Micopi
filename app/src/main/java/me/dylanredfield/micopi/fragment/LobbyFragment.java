@@ -96,7 +96,7 @@ public class LobbyFragment extends Fragment {
                             + getResources().getColor(R.color.text_orange)) + ".invited = " +
                             getColoredToString(Helpers.getStringArrayFromPoint
                                     ((ArrayList<ParseObject>)
-                                            mGame.get(Keys.INVITED_PLAYERS_ARR))) + ";"));
+                                            mGame.get(Keys.PLAYERS_ARR))) + ";"));
 
                     ArrayList<ParseObject> playersArr =
                             (ArrayList<ParseObject>) mGame.get(Keys.PLAYERS_ARR);

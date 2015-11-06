@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 import me.dylanredfield.micopi.R;
@@ -147,7 +149,7 @@ public class RegisterFragmentBasic extends Fragment {
         }
 
         mProgressDialog.show();
-        mUser.signUpInBackground(new SignUpCallback() {
+        mUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 mProgressDialog.dismiss();

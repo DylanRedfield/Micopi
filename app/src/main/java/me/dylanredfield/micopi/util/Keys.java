@@ -35,6 +35,7 @@ public class Keys {
     public static String HAS_STARTED_BOOL = "hasStarted";
     public static String ROUNDS_ARR = "rounds";
     public static String IS_PUBLIC_BOOL = "isPublic";
+    public static String IS_OVER_BOOL = "isOver";
     public static String INVITED_PLAYERS_ARR = "invitedPlayers";
     public static String DESIRED_NUM_PLAYERS = "desiredNumberOfPlayers";
     public static String NUM_PLAYERS_NUM = "numPlayers";
@@ -71,6 +72,10 @@ public class Keys {
     public static String SUBMISSION_FILE = "submissionFile";
     public static String SUBMISSION_STR = "submissionString";
 
+    // FriendRequest
+    public static String KEY_FRIEND_REQUEST = "FriendRequest";
+    public static String FROM_USER_POINT = "fromUser";
+    public static String TO_USER_POINT = "toUser";
 
     // Cloud
     public static String SEARCH_FOR_LOBBY_CLOUD = "searchForLobby";
@@ -80,5 +85,7 @@ public class Keys {
     // Other
     public static int USERNAME_LENGTH = 16;
     public static int EMAIL_LENGTH = 254;
+    public static int FRAGMENT_REQUEST_CODE = 0;
+    public static String EXTRA_FRIENDS_LIST = "me.dylanredfield.micopi.FRIENDS_LIST";
     public static String EXTRA_GAME_OBJ_ID = "me.dylanredfield.micopi.OBJ_ID_EXTRA";
 }
