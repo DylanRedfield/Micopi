@@ -45,6 +45,7 @@ public class Keys {
 
     // GameDifficulty
     public static String KEY_GAME_DIFFICULTY = "GameDifficulty";
+    public static String DIFFICULTY_STRING = "difficultyString";
     public static String EASY_OBJECT_ID = "QYOXPi8grU";
 
 

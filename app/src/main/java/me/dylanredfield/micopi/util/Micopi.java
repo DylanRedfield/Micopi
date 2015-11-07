@@ -5,6 +5,9 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+import me.dylanredfield.micopi.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
 public class Micopi extends Application {
     @Override
     public void onCreate() {
@@ -15,5 +18,10 @@ public class Micopi extends Application {
         Parse.initialize(this,
                 Keys.APPLICATION_ID, Keys.CLIENT_KEY);
         ParseUser.enableAutomaticUser();
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/source_code_pro_regular.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
     }
 }

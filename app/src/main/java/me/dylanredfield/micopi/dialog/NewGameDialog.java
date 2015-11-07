@@ -3,6 +3,7 @@ package me.dylanredfield.micopi.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.dylanredfield.micopi.R;
+import me.dylanredfield.micopi.activity.NewGameActivity;
 import me.dylanredfield.micopi.ui.SelectLangListAdapter;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
@@ -100,6 +102,13 @@ public class NewGameDialog extends DialogFragment {
                 mView.findViewById(R.id.select_lang_layout).setVisibility(View.VISIBLE);
 
                 queryLanguageTable();
+            }
+        });
+        mInviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), NewGameActivity.class);
+                startActivity(i);
             }
         });
     }

@@ -7,6 +7,7 @@
         <item name="android:alertDialogStyle">@style/AlertDialog_Yours</item>
 
     </style>
+
     <style name="AlertDialog_Yours">
         <item name="android:fullDark">@color/light_grey</item>
         <item name="android:topDark">@color/light_grey</item>

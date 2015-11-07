@@ -84,7 +84,7 @@ public class FriendsFragment extends Fragment {
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
         for (int i = 0; i < mFriendsList.size(); i++) {
             if (i == mFriendsList.size() - 1) {
-                mFriendsList.get(i).fetchInBackground(new GetCallback<ParseObject>() {
+                mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject parseObject, ParseException e) {
                         Log.d("fetchInBackground", "true");

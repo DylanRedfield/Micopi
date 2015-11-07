@@ -39,6 +39,7 @@ public class SelectLangListAdapter extends BaseAdapter {
         return 0;
     }
 
+    // TODO edit class name
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if(view == null) {
@@ -53,7 +54,12 @@ public class SelectLangListAdapter extends BaseAdapter {
         lineNum.setTypeface(font);
         lang.setTypeface(font);
         lineNum.setText("" + (i + 1) );
-        lang.setText(mLangList.get(i).getString(Keys.NAME_STR));
+
+        if (mLangList.get(i).getClassName().equals(Keys.KEY_LANGUAGE)) {
+            lang.setText(mLangList.get(i).getString(Keys.NAME_STR));
+        } else if (mLangList.get(i).getClassName().equals(Keys.KEY_GAME_DIFFICULTY)) {
+            lang.setText(mLangList.get(i).getString(Keys.DIFFICULTY_STRING));
+        }
 
         return view;
     }
