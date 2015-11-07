@@ -34,6 +34,7 @@ public class AcceptFriendDialog extends DialogFragment {
     private TextView mLabel;
     private Button mAccept;
     private Button mDecline;
+    private Bundle mExtras;
 
     // TODO fix
     public AcceptFriendDialog(Activity activity) {
@@ -42,6 +43,7 @@ public class AcceptFriendDialog extends DialogFragment {
 
 
     public void setArguments(Bundle extras) {
+        mExtras = extras;
     }
 
     @Override
@@ -77,13 +79,14 @@ public class AcceptFriendDialog extends DialogFragment {
         mAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO fix
                 ParseUser.getCurrentUser().add(Keys.FRIENDS_ARR, ParseObject.createWithoutData(Keys.KEY_USER,
-                        getArguments().getString(Keys.EXTRA_GAME_OBJ_ID)));
+                        mExtras.getString(Keys.EXTRA_GAME_OBJ_ID)));
                 ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         HashMap<String, String> params = new HashMap<>();
-                        params.put("fromUserId", getArguments().getString(Keys.EXTRA_GAME_OBJ_ID));
+                        params.put("fromUserId", mExtras.getString(Keys.EXTRA_GAME_OBJ_ID));
                         ParseCloud.callFunctionInBackground("handleFriendRequest", params,
                                 new FunctionCallback<String>() {
                                     @Override
@@ -93,8 +96,6 @@ public class AcceptFriendDialog extends DialogFragment {
                                             dismiss();
 
                                         } else {
-                                            Log.d("Accept error",
-                                                    getArguments().getString(Keys.EXTRA_GAME_OBJ_ID));
                                         }
 
                                     }

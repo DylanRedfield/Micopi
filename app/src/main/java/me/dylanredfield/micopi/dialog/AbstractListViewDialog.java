@@ -1,12 +1,14 @@
 package me.dylanredfield.micopi.dialog;
 
 import android.app.Dialog;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.ParseObject;
 
@@ -20,6 +22,8 @@ public abstract class AbstractListViewDialog extends DialogFragment {
     private List<ParseObject> mList;
     private SelectLangListAdapter mAdapter;
     private ListView mListView;
+    private TextView mLabel;
+    private Typeface mFont;
 
     @Override
     public Dialog onCreateDialog(Bundle savedState) {
@@ -28,12 +32,18 @@ public abstract class AbstractListViewDialog extends DialogFragment {
         mView = inflater.inflate(R.layout.dialog_list_view, null);
         builder.setView(mView);
 
+        mFont = Typeface.createFromAsset(getResources().getAssets(),
+                "source_code_pro_regular.ttf");
+
         mListView = (ListView) mView.findViewById(R.id.list);
+        mLabel = (TextView) mView.findViewById(R.id.label);
+        mLabel.setTypeface(mFont);
 
         if (mList != null) {
             mAdapter = new SelectLangListAdapter(getActivity(), mList);
             mListView.setAdapter(mAdapter);
         }
+        setListeners();
 
 
         Dialog dialog = builder.create();
@@ -47,6 +57,17 @@ public abstract class AbstractListViewDialog extends DialogFragment {
             mAdapter = new SelectLangListAdapter(getActivity(), mList);
             mListView.setAdapter(mAdapter);
         }
+    }
+    public List<ParseObject> getList() {
+        return mList;
+    }
+
+    public ListView getListView() {
+        return mListView;
+    }
+
+    public TextView getLabel() {
+        return mLabel;
     }
 
     public abstract void setListeners();

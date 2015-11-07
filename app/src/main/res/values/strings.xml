@@ -16,6 +16,7 @@
     <string name="language_label">setLanguage()</string>
     <string name="invite_friends">inviteFriends()</string>
     <string name="accept">accept()</string>
+    <string name="select_players_label">// Select players</string>
     <string name="decline">decline()</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

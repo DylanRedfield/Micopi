@@ -7,6 +7,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -21,7 +23,6 @@ import java.util.List;
 
 import me.dylanredfield.micopi.R;
 import me.dylanredfield.micopi.dialog.SelectLangDialog;
-import me.dylanredfield.micopi.ui.InviteToGameAdapter;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
 
@@ -32,6 +33,12 @@ public class NewGameFragment extends Fragment {
     private ParseObject mNewGame;
     private List<ParseObject> mFriendsList;
     private SelectLangDialog mLangDialog;
+    private Button mStartGame;
+    private LinearLayout mLayout2;
+    private LinearLayout mLayout3;
+    private TextView mSelectPlayersLabel;
+    private TextView mSelectPlayers;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstance) {
@@ -78,7 +85,42 @@ public class NewGameFragment extends Fragment {
                 "" + getResources().getColor(R.color.text_orange)) + ".lang = "
                 + Helpers.getHtmlString("\"Select\"", ""
                 + getResources().getColor(R.color.lang_pink)) + ";"));
+
+        mSelectPlayersLabel = (TextView) mView.findViewById(R.id.select_players_label);
+        mSelectPlayersLabel.setTypeface(mFont);
+
+        mSelectPlayers = (TextView) mView.findViewById(R.id.select_players);
+        mSelectPlayers.setTypeface(mFont);
+
+        mSelectPlayers.setText(
+                Html.fromHtml(
+                        Helpers.getHtmlString("game", ""
+                                + getResources().getColor(R.color.text_orange))
+                                + ".players = ["
+                                + Helpers.getHtmlString("Select", ""
+                                + getResources().getColor(R.color.text_blue))
+                                + "];"
+                )
+        );
+
+        mNewGame = ParseObject.create(Keys.KEY_GAME);
+        mNewGame.put(Keys.DESIRED_NUM_PLAYERS, 4);
+        mNewGame.put(Keys.HAS_STARTED_BOOL, false);
+        mNewGame.put(Keys.INVITE_STARTER_POINT, ParseUser.getCurrentUser());
+        mNewGame.put(Keys.IS_OVER_BOOL, false);
+        mNewGame.put(Keys.IS_PUBLIC_BOOL, false);
+        mNewGame.put(Keys.IS_INVITE_BOOL, true);
+        mNewGame.put(Keys.NUM_PLAYERS_NUM, 1);
+
+        mLayout2 = (LinearLayout) mView.findViewById(R.id.layout_2);
+        mLayout3 = (LinearLayout) mView.findViewById(R.id.layout_3);
+
+        mStartGame = (Button) mView.findViewById(R.id.start_game);
+        mStartGame.setTypeface(mFont);
+
         mLangDialog = SelectLangDialog.newInstance();
+        mLangDialog.setTargetFragment(this, 1);
+
         mSelectLang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +128,7 @@ public class NewGameFragment extends Fragment {
             }
         });
     }
+
     public void queryParse() {
         ParseQuery<ParseObject> langQuery = new ParseQuery<ParseObject>(Keys.KEY_LANGUAGE);
         langQuery.findInBackground(new FindCallback<ParseObject>() {
@@ -111,6 +154,18 @@ public class NewGameFragment extends Fragment {
 
     public ParseObject getNewGame() {
         return mNewGame;
+    }
+
+    public TextView getSelectLang() {
+        return mSelectLang;
+    }
+
+    public LinearLayout getLayout2() {
+        return mLayout2;
+    }
+
+    public LinearLayout getLayout3() {
+        return mLayout2;
     }
 
 }

@@ -82,24 +82,30 @@ public class FriendsFragment extends Fragment {
     public void queryParse() {
         // TODO speed this query up by doing async
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
-        for (int i = 0; i < mFriendsList.size(); i++) {
-            if (i == mFriendsList.size() - 1) {
-                mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject parseObject, ParseException e) {
-                        Log.d("fetchInBackground", "true");
-                        inviteQuery();
+        mCurrentUser.fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                for (int i = 0; i < mFriendsList.size(); i++) {
+                    if (i == mFriendsList.size() - 1) {
+                        mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject parseObject, ParseException e) {
+                                Log.d("fetchInBackground", "true");
+                                inviteQuery();
 
+                            }
+                        });
+                    } else {
+                        mFriendsList.get(i).fetchIfNeededInBackground();
                     }
-                });
-            } else {
-                mFriendsList.get(i).fetchIfNeededInBackground();
-            }
-        }
+                }
 
-        if (mFriendsList.size() == 0) {
-            inviteQuery();
-        }
+                if (mFriendsList.size() == 0) {
+                    inviteQuery();
+                }
+            }
+        });
+
 
     }
 

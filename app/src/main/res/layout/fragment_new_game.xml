@@ -73,10 +73,10 @@
             <TextView
                 android:id="@+id/select_lang_label"
                 android:layout_width="match_parent"
-                android:text="@string/select_lang_label"
-                android:background="@color/light_grey"
                 android:layout_height="wrap_content"
+                android:background="@color/light_grey"
                 android:paddingStart="8dp"
+                android:text="@string/select_lang_label"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -127,162 +127,178 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/layout_2"
             android:visibility="gone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/line_id_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text=" 6"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/challenge_label"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-                android:paddingStart="8dp"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/line_id_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text=" 6"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/line_id_7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text=" 7"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/select_players_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
+                    android:paddingStart="8dp"
+                    android:text="@string/select_players_label"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/challenge"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-                android:paddingStart="8dp"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/line_id_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text=" 7"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/line_id_8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text=" 8"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/select_players"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_grey"
+                    android:paddingStart="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/line_id_9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text=" 9"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/select_players_label"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-                android:paddingLeft="8dp"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/line_id_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text=" 8"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/layout_3"
             android:visibility="gone"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/line_id_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text="10"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/select_players"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/dark_grey"
-                android:paddingLeft="8dp"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/line_id_9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text=" 9"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/line_id_11"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/select_difficult_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_grey"
+                    android:paddingLeft="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/line_number_background"
-                android:paddingEnd="4dp"
-                android:paddingStart="4dp"
-                android:text="11"
-                android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/line_id_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text="10"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/select_difficulty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/dark_grey"
+                    android:paddingLeft="8dp"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/line_id_11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/line_number_background"
+                    android:paddingEnd="4dp"
+                    android:paddingStart="4dp"
+                    android:text="11"
+                    android:textColor="@color/text_light_grey"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:padding="12dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:padding="12dp">
+
         <Button
             android:id="@+id/start_game"
-            android:text="@string/start_game"
-            android:textColor="@color/white"
-            android:textSize="18sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_courner_rect"
+            android:text="@string/start_game"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

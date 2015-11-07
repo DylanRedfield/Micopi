@@ -80,7 +80,7 @@ public class NewGameDialog extends DialogFragment {
         mLabel.setTypeface(mFont);
         mFindGame.setTypeface(mFont);
         mInviteFriends.setTypeface(mFont);
-        mLabel.setText("// NewGame");
+        mLabel.setText("//NewGame");
 
         mProgressDialog = new ProgressDialog(mActivity);
         mProgressDialog.setMessage("Loading...");
@@ -101,6 +101,9 @@ public class NewGameDialog extends DialogFragment {
                 mView.findViewById(R.id.default_layout).setVisibility(View.GONE);
                 mView.findViewById(R.id.select_lang_layout).setVisibility(View.VISIBLE);
 
+                TextView mNewLabel = (TextView) mView.findViewById(R.id.label_select_lang);
+                mNewLabel.setTypeface(mFont);
+                mNewLabel.setText("//Language");
                 queryLanguageTable();
             }
         });
