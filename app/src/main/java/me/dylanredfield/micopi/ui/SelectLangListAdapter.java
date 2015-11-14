@@ -59,6 +59,9 @@ public class SelectLangListAdapter extends BaseAdapter {
             lang.setText(mLangList.get(i).getString(Keys.NAME_STR));
         } else if (mLangList.get(i).getClassName().equals(Keys.KEY_GAME_DIFFICULTY)) {
             lang.setText(mLangList.get(i).getString(Keys.DIFFICULTY_STRING));
+        } else if (mLangList.get(i).getClassName().equals(Keys.KEY_USER)) {
+            lang.setText(mLangList.get(i).getString(Keys.USERNAME_STR));
+            lang.setTextColor(mActivity.getResources().getColor(R.color.text_blue));
         }
 
         return view;

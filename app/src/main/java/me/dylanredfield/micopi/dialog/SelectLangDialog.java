@@ -12,17 +12,14 @@ import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
 
 public class SelectLangDialog extends AbstractListViewDialog {
+    private ParseObject mNewGame;
 
     @Override
     public void setListeners() {
-        final ParseObject newGame = ((NewGameFragment) getTargetFragment()).getNewGame();
-
-        getLabel().setText("//Language");
-
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                newGame.put(Keys.LANGUAGE_POINT, getList().get(i));
+                mNewGame.put(Keys.LANGUAGE_POINT, getList().get(i));
                 ((NewGameFragment) getTargetFragment()).getSelectLang()
                         .setText(Html.fromHtml(Helpers.getHtmlString("game",
                                 "" + getResources().getColor(R.color.text_orange)) + ".lang = "
@@ -33,6 +30,12 @@ public class SelectLangDialog extends AbstractListViewDialog {
                 dismiss();
             }
         });
+    }
+
+    @Override
+    public void setDefaultValues() {
+        mNewGame = ((NewGameFragment) getTargetFragment()).getNewGame();
+        getLabel().setText("//Language");
     }
 
     public static SelectLangDialog newInstance() {

@@ -24,6 +24,7 @@ public abstract class AbstractListViewDialog extends DialogFragment {
     private ListView mListView;
     private TextView mLabel;
     private Typeface mFont;
+    private TextView mAdd;
 
     @Override
     public Dialog onCreateDialog(Bundle savedState) {
@@ -38,11 +39,13 @@ public abstract class AbstractListViewDialog extends DialogFragment {
         mListView = (ListView) mView.findViewById(R.id.list);
         mLabel = (TextView) mView.findViewById(R.id.label);
         mLabel.setTypeface(mFont);
+        mAdd = (TextView) mView.findViewById(R.id.add);
 
         if (mList != null) {
             mAdapter = new SelectLangListAdapter(getActivity(), mList);
             mListView.setAdapter(mAdapter);
         }
+        setDefaultValues();
         setListeners();
 
 
@@ -58,6 +61,7 @@ public abstract class AbstractListViewDialog extends DialogFragment {
             mListView.setAdapter(mAdapter);
         }
     }
+
     public List<ParseObject> getList() {
         return mList;
     }
@@ -70,5 +74,18 @@ public abstract class AbstractListViewDialog extends DialogFragment {
         return mLabel;
     }
 
+    public Typeface getFont() {
+        return mFont;
+    }
+
+    public TextView getAdd() {
+        return mAdd;
+    }
+
+    public void setColor() {
+    }
+
     public abstract void setListeners();
+
+    public abstract void setDefaultValues();
 }

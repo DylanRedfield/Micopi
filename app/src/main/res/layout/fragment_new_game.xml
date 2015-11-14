@@ -232,9 +232,10 @@
                     android:id="@+id/select_difficult_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/dark_grey"
+                    android:background="@color/light_grey"
                     android:paddingLeft="8dp"
-                    android:textColor="@color/white"
+                    android:text="@string/difficulty_label"
+                    android:textColor="@color/text_light_grey"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -258,7 +259,7 @@
                     android:id="@+id/select_difficulty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/dark_grey"
+                    android:background="@color/light_grey"
                     android:paddingLeft="8dp"
                     android:textColor="@color/white"
                     android:textSize="18sp" />

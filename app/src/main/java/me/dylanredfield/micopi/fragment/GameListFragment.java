@@ -26,7 +26,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -409,7 +408,7 @@ public class GameListFragment extends Fragment {
             mColor3 = "" + getResources().getColor(R.color.lang_pink);
             String uppercase = mString1.substring(0, 1).toUpperCase() + mString1.substring(1);
 
-            String line1Text = Helpers.getHtmlString(mString1, mColor1) + " = " + uppercase + " (" +
+            String line1Text = Helpers.getHtmlString(mString1, mColor1) + " = " + uppercase + "(" +
                     Helpers.getHtmlString(mString2, mColor2) + ");";
             String line2Text = Helpers.getHtmlString(mString1, mColor1) + ".lang = " +
                     Helpers.getHtmlString("\"" + mString3 + "\"", mColor3) + ";";

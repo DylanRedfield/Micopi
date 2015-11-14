@@ -231,18 +231,21 @@ public class FriendsFragment extends Fragment {
                     .equals(mList.get(position).getClassName())) {
                 separator.setVisibility(View.VISIBLE);
                 separatorText.setText("// Friends");
+            } else {
+                separator.setVisibility(View.GONE);
             }
 
 
+            // TODO fix
             if (separator.getVisibility() == View.VISIBLE) {
-                num1.setText(" " + (1 + position * 4));
-                num2.setText(" " + (2 + position * 4));
-                num3.setText(" " + (3 + position * 4));
-                num4.setText(" " + (4 + position * 4));
+                num1.setText(" " + (1 + position * 3));
+                num2.setText(" " + (2 + position * 3));
+                num3.setText(" " + (3 + position * 3));
+                num4.setText(" " + (3 + position * 3));
             } else {
-                num2.setText(" " + (1 + position * 4));
-                num3.setText(" " + (2 + position * 4));
-                num4.setText(" " + (3 + position * 4));
+                num2.setText(" " + (1 + position * 3));
+                num3.setText(" " + (2 + position * 3));
+                num4.setText(" " + (3 + position * 3));
             }
 
 

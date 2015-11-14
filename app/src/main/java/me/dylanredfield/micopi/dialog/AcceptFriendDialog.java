@@ -73,6 +73,8 @@ public class AcceptFriendDialog extends DialogFragment {
         mLabel.setTypeface(mFont);
         mAccept.setTypeface(mFont);
         mDecline.setTypeface(mFont);
+
+        mLabel.setText("//FriendRequest");
     }
 
     public void setListeners() {

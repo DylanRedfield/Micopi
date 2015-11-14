@@ -7,18 +7,23 @@
 
     <TextView
         android:id="@+id/label"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:background="@color/splash_background"
+        android:padding="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_grey" />
-
+        android:layout_height="wrap_content" />
     <Button
         android:id="@+id/accept"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAllCaps="false"
         android:text="@string/accept" />
 
     <Button
         android:id="@+id/decline"
+        android:textAllCaps="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/decline" />
