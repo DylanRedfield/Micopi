@@ -22,7 +22,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="01"
+                android:text=" 1"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -49,7 +49,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="02"
+                android:text=" 2"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -75,7 +75,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="03"
+                android:text=" 3"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -93,7 +93,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="04"
+                android:text=" 4"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -119,7 +119,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="05"
+                android:text=" 5"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -137,7 +137,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="06"
+                android:text=" 6"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 
@@ -163,7 +163,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="07"
+                android:text=" 7"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -180,7 +180,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="08"
+                android:text=" 8"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -197,7 +197,7 @@
                 android:background="@color/line_number_background"
                 android:paddingEnd="4dp"
                 android:paddingStart="4dp"
-                android:text="09"
+                android:text=" 9"
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
 

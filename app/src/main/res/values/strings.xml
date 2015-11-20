@@ -16,6 +16,7 @@
     <string name="language_label">setLanguage()</string>
     <string name="invite_friends">inviteFriends()</string>
     <string name="accept">accept()</string>
+    <string name="select_players_label">// Select players</string>
     <string name="decline">decline()</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -26,4 +27,10 @@
     <string name="find_on_facebook">findOnFacebook()</string>
     <string name="invite_via_message">inviteViaMessage()</string>
     <string name="search_label">//search</string>
+    <string name="add">add()</string>
+    <string name="done">done()</string>
+    <string name="players_label">//Players</string>
+    <string name="start_game">startGame()</string>
+    <string name="select_lang_label">// Select language</string>
+    <string name="difficulty_label">// Difficulty</string>
 </resources>

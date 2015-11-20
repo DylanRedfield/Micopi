@@ -3,6 +3,7 @@ package me.dylanredfield.micopi.dialog;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -29,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import me.dylanredfield.micopi.R;
+import me.dylanredfield.micopi.activity.NewGameActivity;
 import me.dylanredfield.micopi.ui.SelectLangListAdapter;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
@@ -78,7 +80,7 @@ public class NewGameDialog extends DialogFragment {
         mLabel.setTypeface(mFont);
         mFindGame.setTypeface(mFont);
         mInviteFriends.setTypeface(mFont);
-        mLabel.setText("// NewGame");
+        mLabel.setText("//NewGame");
 
         mProgressDialog = new ProgressDialog(mActivity);
         mProgressDialog.setMessage("Loading...");
@@ -99,7 +101,17 @@ public class NewGameDialog extends DialogFragment {
                 mView.findViewById(R.id.default_layout).setVisibility(View.GONE);
                 mView.findViewById(R.id.select_lang_layout).setVisibility(View.VISIBLE);
 
+                TextView mNewLabel = (TextView) mView.findViewById(R.id.label_select_lang);
+                mNewLabel.setTypeface(mFont);
+                mNewLabel.setText("//Language");
                 queryLanguageTable();
+            }
+        });
+        mInviteFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), NewGameActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -165,42 +177,7 @@ public class NewGameDialog extends DialogFragment {
                     }
                 });
 
-        ParseCloud.callFunctionInBackground(Keys.SEARCH_FOR_LOBBY_CLOUD, params,
-                new FunctionCallback<String>() {
-                    @Override
-                    public void done(String o, ParseException e) {
-                        if (e == null) {
-                            if (o.equals("wait")) {
-                                Log.d("CloudCall", "wait");
-                                Helpers.showDialog("Lobby Found!", "The Game will " +
-                                        "start will begin when enough players have " +
-                                        "joined", mActivity);
-                                dismiss();
-                            } else {
-                                // TODO sends user to Game Screen with ObjectId extra
-                                Log.d("CloudCall", "found");
-                                dismiss();
-                            }
-                        } else {
-                            // if e No Lobbys Open
-                            // TODO correct error handling
-                            //createGame();
-                            Log.d("SearchForLobby Error: ", e.getMessage());
-                            if (e.getMessage().equals("No Lobbys Open")) {
-
-                                createGame(langId);
-                                // Lobby has been created
-
-                            } else {
-                                Helpers.showDialog("Whoops", e.getMessage(), getActivity());
-                                dismiss();
-                                mProgressDialog.dismiss();
-                            }
-                        }
-                    }
-                });
     }
-
     public void createGame(String langId) {
         ParseObject game = new ParseObject(Keys.KEY_GAME);
         game.put(Keys.IS_PUBLIC_BOOL, true);

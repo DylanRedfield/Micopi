@@ -26,7 +26,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,7 @@ public class GameListFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_game_list, container, false);
         setHasOptionsMenu(true);
+        Log.d("GameList", "OnCreateView");
         getDefaultValues();
         setListeners();
         setEmptyList();
@@ -156,7 +156,7 @@ public class GameListFragment extends Fragment {
         gamesQuery.include(Keys.PLAYERS_ARR);
         gamesQuery.include(Keys.INVITED_PLAYERS_ARR);
         gamesQuery.include("Language");
-        mProgressDialog.show();
+        //mProgressDialog.show();
         gamesQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -285,22 +285,6 @@ public class GameListFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        try {
-            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
-            childFragmentManager.setAccessible(true);
-            childFragmentManager.set(this, null);
-
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public class GameListAdapter extends BaseAdapter {
         private TextView mSeparator;
         private TextView mLine1;
@@ -424,7 +408,7 @@ public class GameListFragment extends Fragment {
             mColor3 = "" + getResources().getColor(R.color.lang_pink);
             String uppercase = mString1.substring(0, 1).toUpperCase() + mString1.substring(1);
 
-            String line1Text = Helpers.getHtmlString(mString1, mColor1) + " = " + uppercase + " (" +
+            String line1Text = Helpers.getHtmlString(mString1, mColor1) + " = " + uppercase + "(" +
                     Helpers.getHtmlString(mString2, mColor2) + ");";
             String line2Text = Helpers.getHtmlString(mString1, mColor1) + ".lang = " +
                     Helpers.getHtmlString("\"" + mString3 + "\"", mColor3) + ";";

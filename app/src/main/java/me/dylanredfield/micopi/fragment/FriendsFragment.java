@@ -80,36 +80,53 @@ public class FriendsFragment extends Fragment {
     }
 
     public void queryParse() {
+        // TODO speed this query up by doing async
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
-        for (int i = 0; i < mFriendsList.size(); i++) {
-            if (i == mFriendsList.size() - 1) {
-                mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject parseObject, ParseException e) {
-                        ParseQuery<ParseObject> inviteQuery = ParseQuery.getQuery(Keys.KEY_FRIEND_REQUEST);
-                        inviteQuery.whereEqualTo(Keys.TO_USER_POINT, mCurrentUser);
-                        inviteQuery.include(Keys.FROM_USER_POINT);
-                        inviteQuery.findInBackground(new FindCallback<ParseObject>() {
+        mCurrentUser.fetchInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                for (int i = 0; i < mFriendsList.size(); i++) {
+                    if (i == mFriendsList.size() - 1) {
+                        mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
                             @Override
-                            public void done(List<ParseObject> list2, ParseException e) {
-                                if (e == null) {
-                                    mFullList.addAll(list2);
-                                    mFullList.addAll(mFriendsList);
-                                    mAdapter = new FriendsAdapter(mFragment);
-                                    mListView.setAdapter(mAdapter);
+                            public void done(ParseObject parseObject, ParseException e) {
+                                Log.d("fetchInBackground", "true");
+                                inviteQuery();
 
-                                } else {
-                                    Log.d("FuckTest", e.getMessage());
-                                }
                             }
                         });
+                    } else {
+                        mFriendsList.get(i).fetchIfNeededInBackground();
                     }
-                });
-            } else {
-                mFriendsList.get(i).fetchIfNeededInBackground();
-            }
-        }
+                }
 
+                if (mFriendsList.size() == 0) {
+                    inviteQuery();
+                }
+            }
+        });
+
+
+    }
+
+    public void inviteQuery() {
+        ParseQuery<ParseObject> inviteQuery = ParseQuery.getQuery(Keys.KEY_FRIEND_REQUEST);
+        inviteQuery.whereEqualTo(Keys.TO_USER_POINT, mCurrentUser);
+        inviteQuery.include(Keys.FROM_USER_POINT);
+        inviteQuery.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list2, ParseException e) {
+                if (e == null) {
+                    mFullList.addAll(list2);
+                    mFullList.addAll(mFriendsList);
+                    mAdapter = new FriendsAdapter(mFragment);
+                    mListView.setAdapter(mAdapter);
+
+                } else {
+                    Log.d("FuckTest", e.getMessage());
+                }
+            }
+        });
     }
 
     public void setListeners() {
@@ -214,18 +231,21 @@ public class FriendsFragment extends Fragment {
                     .equals(mList.get(position).getClassName())) {
                 separator.setVisibility(View.VISIBLE);
                 separatorText.setText("// Friends");
+            } else {
+                separator.setVisibility(View.GONE);
             }
 
 
+            // TODO fix
             if (separator.getVisibility() == View.VISIBLE) {
-                num1.setText(" " + (1 + position * 4));
-                num2.setText(" " + (2 + position * 4));
-                num3.setText(" " + (3 + position * 4));
-                num4.setText(" " + (4 + position * 4));
+                num1.setText(" " + (1 + position * 3));
+                num2.setText(" " + (2 + position * 3));
+                num3.setText(" " + (3 + position * 3));
+                num4.setText(" " + (3 + position * 3));
             } else {
-                num2.setText(" " + (1 + position * 4));
-                num3.setText(" " + (2 + position * 4));
-                num4.setText(" " + (3 + position * 4));
+                num2.setText(" " + (1 + position * 3));
+                num3.setText(" " + (2 + position * 3));
+                num4.setText(" " + (3 + position * 3));
             }
 
 

@@ -73,12 +73,15 @@ public class AcceptFriendDialog extends DialogFragment {
         mLabel.setTypeface(mFont);
         mAccept.setTypeface(mFont);
         mDecline.setTypeface(mFont);
+
+        mLabel.setText("//FriendRequest");
     }
 
     public void setListeners() {
         mAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO fix
                 ParseUser.getCurrentUser().add(Keys.FRIENDS_ARR, ParseObject.createWithoutData(Keys.KEY_USER,
                         mExtras.getString(Keys.EXTRA_GAME_OBJ_ID)));
                 ParseUser.getCurrentUser().saveInBackground(new SaveCallback() {
@@ -93,9 +96,8 @@ public class AcceptFriendDialog extends DialogFragment {
                                                      ParseException e) {
                                         if (e == null) {
                                             dismiss();
+
                                         } else {
-                                            Log.d("Accept error",
-                                                    mExtras.getString(Keys.EXTRA_GAME_OBJ_ID));
                                         }
 
                                     }
