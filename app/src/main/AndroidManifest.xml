@@ -31,6 +31,7 @@
         </activity>
         <activity android:name=".activity.LobbyActivity"/>
         <activity android:name=".activity.NewGameActivity"/>
+        <activity android:name=".activity.GameActivity"/>
     </application>
 
 </manifest>

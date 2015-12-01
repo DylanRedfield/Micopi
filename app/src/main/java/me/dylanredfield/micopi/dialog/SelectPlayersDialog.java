@@ -53,7 +53,19 @@ public class SelectPlayersDialog extends AbstractListViewDialog {
             }
         });
 
-        mAdd.setOnClickListener(new View.OnClickListener() {
+        setAddListener();
+
+    }
+
+    @Override
+    public void setDefaultValues() {
+        getLabel().setText("//AddPlayers");
+        mAdd = getAdd();
+
+    }
+
+    public void setAddListener() {
+        getAdd().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ParseObject newGame = ((NewGameFragment) getTargetFragment()).getNewGame();
@@ -69,12 +81,6 @@ public class SelectPlayersDialog extends AbstractListViewDialog {
                 dismiss();
             }
         });
-    }
-
-    @Override
-    public void setDefaultValues() {
-        getLabel().setText("//AddPlayers");
-        mAdd = getAdd();
     }
 
     private String getColoredToString(ArrayList<String> list) {
@@ -95,5 +101,9 @@ public class SelectPlayersDialog extends AbstractListViewDialog {
     public static SelectPlayersDialog newInstance() {
         SelectPlayersDialog dialog = new SelectPlayersDialog();
         return dialog;
+    }
+
+    public ArrayList<ParseObject> getPlayersList() {
+        return mSelectedPlayersList;
     }
 }

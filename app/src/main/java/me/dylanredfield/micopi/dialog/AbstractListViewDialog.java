@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
@@ -15,12 +16,12 @@ import com.parse.ParseObject;
 import java.util.List;
 
 import me.dylanredfield.micopi.R;
-import me.dylanredfield.micopi.ui.SelectLangListAdapter;
+import me.dylanredfield.micopi.ui.DialogListAdapter;
 
 public abstract class AbstractListViewDialog extends DialogFragment {
     private View mView;
     private List<ParseObject> mList;
-    private SelectLangListAdapter mAdapter;
+    private DialogListAdapter mAdapter;
     private ListView mListView;
     private TextView mLabel;
     private Typeface mFont;
@@ -40,9 +41,10 @@ public abstract class AbstractListViewDialog extends DialogFragment {
         mLabel = (TextView) mView.findViewById(R.id.label);
         mLabel.setTypeface(mFont);
         mAdd = (TextView) mView.findViewById(R.id.add);
+        Log.d("AddTest", mAdd.toString());
 
         if (mList != null) {
-            mAdapter = new SelectLangListAdapter(getActivity(), mList);
+            mAdapter = new DialogListAdapter(getActivity(), mList);
             mListView.setAdapter(mAdapter);
         }
         setDefaultValues();
@@ -57,7 +59,7 @@ public abstract class AbstractListViewDialog extends DialogFragment {
         mList = list;
 
         if (mAdapter == null && getActivity() != null) {
-            mAdapter = new SelectLangListAdapter(getActivity(), mList);
+            mAdapter = new DialogListAdapter(getActivity(), mList);
             mListView.setAdapter(mAdapter);
         }
     }
@@ -88,4 +90,5 @@ public abstract class AbstractListViewDialog extends DialogFragment {
     public abstract void setListeners();
 
     public abstract void setDefaultValues();
+
 }

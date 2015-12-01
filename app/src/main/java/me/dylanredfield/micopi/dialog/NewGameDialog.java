@@ -31,7 +31,8 @@ import java.util.List;
 
 import me.dylanredfield.micopi.R;
 import me.dylanredfield.micopi.activity.NewGameActivity;
-import me.dylanredfield.micopi.ui.SelectLangListAdapter;
+import me.dylanredfield.micopi.fragment.GameListFragment;
+import me.dylanredfield.micopi.ui.DialogListAdapter;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
 
@@ -111,9 +112,23 @@ public class NewGameDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), NewGameActivity.class);
-                startActivity(i);
+                startActivityForResult(i, Keys.GAME_LIST_REQUEST_CODE);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("AdapterNotify", "Trigger");
+        dismiss();
+        if (requestCode == Keys.GAME_LIST_REQUEST_CODE
+                && resultCode == Keys.CREATED_GAME_RESULT_CODE) {
+            getTargetFragment().onActivityResult(requestCode, resultCode
+                    , data);
+        } else {
+            Log.d("AdapterNotify", "Failure");
+        }
     }
 
     public void queryLanguageTable() {
@@ -126,7 +141,7 @@ public class NewGameDialog extends DialogFragment {
                 mProgressDialog.dismiss();
                 if (e == null) {
                     ListView listView = (ListView) mView.findViewById(R.id.select_lang_list);
-                    SelectLangListAdapter listAdapter = new SelectLangListAdapter(getActivity(),
+                    DialogListAdapter listAdapter = new DialogListAdapter(getActivity(),
                             list);
                     listView.setAdapter(listAdapter);
 
@@ -161,16 +176,29 @@ public class NewGameDialog extends DialogFragment {
                         if (stringObjectHashMap != null) {
                             message = (String) stringObjectHashMap.get("message");
                         }
+
+                        //TODO call onActivityResult() on GameList
                         if (message.equals("Joined Lobby")) {
                             Helpers.showDialog("Lobby Found!", "The Game will " +
                                     "start will begin when enough players have " +
                                     "joined", mActivity);
+                            /*Intent data = new Intent();
+                            data.putExtra(Keys.EXTRA_GAME_OBJ_ID,
+                                    (String) stringObjectHashMap.get("game"));
+                            getTargetFragment().onActivityResult(Keys.GAME_LIST_REQUEST_CODE,
+                                    Keys.CREATED_GAME_RESULT_CODE, data);*/
                             dismiss();
                         } else if (message.equals("Game Started")) {
+                            /*Intent data = new Intent();
+                            data.putExtra(Keys.EXTRA_GAME_OBJ_ID,
+                                    (String) stringObjectHashMap.get("game"));
+                            getTargetFragment().onActivityResult(Keys.GAME_LIST_REQUEST_CODE,
+                                    Keys.CREATED_GAME_RESULT_CODE, data);*/
                             // TODO game found and started
                             // Send to game screen with objectId in the "game" key
                         } else if (e != null && e.getMessage().equals("None Open")) {
-                            createGame(langId);
+                            ParseObject newGame = createGame(langId);
+
                         } else if (e != null) {
                             Helpers.showDialog("Whoops", e.getMessage(), mActivity);
                         }
@@ -178,8 +206,9 @@ public class NewGameDialog extends DialogFragment {
                 });
 
     }
-    public void createGame(String langId) {
-        ParseObject game = new ParseObject(Keys.KEY_GAME);
+
+    public ParseObject createGame(String langId) {
+        final ParseObject game = new ParseObject(Keys.KEY_GAME);
         game.put(Keys.IS_PUBLIC_BOOL, true);
         game.put(Keys.IS_OVER_BOOL, false);
         game.put(Keys.HAS_STARTED_BOOL, false);
@@ -201,11 +230,16 @@ public class NewGameDialog extends DialogFragment {
                     Helpers.showDialog("Lobby Found!", "The Game will start " +
                             "will begin when enough players have joined"
                             , mActivity);
+                    Intent data = new Intent();
+                    data.putExtra(Keys.EXTRA_GAME_OBJ_ID, game.getObjectId());
+                    getTargetFragment().onActivityResult(Keys.GAME_LIST_REQUEST_CODE,
+                            Keys.CREATED_GAME_RESULT_CODE, data);
                 } else {
                     Helpers.showDialog("Whoops", e.getMessage(), getActivity());
                 }
             }
         });
+        return game;
     }
 }
 

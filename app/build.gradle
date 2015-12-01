@@ -30,4 +30,5 @@ dependencies {
     compile files('libs/Parse-1.10.2.jar')
     compile files('libs/PPNS-1.10.2.jar')
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+    compile files('libs/JavaPrettify-1.2.1.jar')
 }

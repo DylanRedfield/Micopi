@@ -1,190 +1,320 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/dark_grey"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/line_id_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 1"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/game_info_label"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark_grey"
-            android:paddingStart="8dp"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 1"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/game_info_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 2"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/lang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 5"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/difficulty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 3"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 4"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/invited_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 5"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/accpeted_arr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 6"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/invited_arr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_id_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 7"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/leader_panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="0"
+        android:background="@color/splash_background"
+        android:padding="12dp"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/line_id_2"
+        <LinearLayout
+            android:id="@+id/layout_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 2"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/lang"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/public_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="@string/allow_public_to_join"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Switch
+                android:id="@+id/public_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/dark_grey"
-            android:paddingStart="8dp"
+            android:layout_below="@id/layout_top"
+            android:layout_centerHorizontal="true"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/edit_lobby"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/round_courner_rect"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="@string/edit_lobby"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/start_game_leader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/round_courner_rect"
+                android:clickable="false"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text="@string/start_game"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id='@+id/lobby'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/splash_background"
+        android:gravity="center"
+        android:padding="4dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/invite_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_courner_rect"
+            android:padding="4dp"
+            android:text="@string/invite_friends"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id='@+id/your_turn'
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_weight="0"
+        android:background="@color/splash_background"
+        android:gravity="center"
+        android:padding="4dp"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/line_id_3"
+        <Button
+            android:id="@+id/play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 3"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/line_id_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 4"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/invited_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_grey"
-            android:paddingStart="8dp"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/line_id_5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 5"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/invited_arr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_grey"
-            android:paddingStart="8dp"
+            android:layout_gravity="center"
+            android:background="@drawable/round_courner_rect"
+            android:padding="4dp"
+            android:text="@string/play"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/line_id_6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 6"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/line_id_7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 7"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/accpeted_arr"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/dark_grey"
-            android:paddingLeft="8dp"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/line_id_8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/line_number_background"
-            android:paddingEnd="4dp"
-            android:paddingStart="4dp"
-            android:text=" 8"
-            android:textColor="@color/text_light_grey"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
     </LinearLayout>
 
 </LinearLayout>

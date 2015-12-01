@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.dylanredfield.micopi.ui.CustomEditText;
+import me.dylanredfield.micopi.ui.LineNumberEditText;
 import me.dylanredfield.micopi.R;
 
 public class RegisterFragment extends Fragment {
     private View mView;
-    private CustomEditText mEditText;
+    private LineNumberEditText mEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -24,7 +24,7 @@ public class RegisterFragment extends Fragment {
         return mView;
     }
     public void defaultValues() {
-        mEditText = (CustomEditText) mView.findViewById(R.id.edit_text);
+        mEditText = (LineNumberEditText) mView.findViewById(R.id.edit_text);
         final String current = "Device:~ CaH$ register";
         mEditText.setText(current);
         Selection.setSelection(mEditText.getText(), mEditText.getText().length());
