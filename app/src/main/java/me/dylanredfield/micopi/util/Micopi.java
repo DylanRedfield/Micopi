@@ -18,10 +18,5 @@ public class Micopi extends Application {
         Parse.initialize(this,
                 Keys.APPLICATION_ID, Keys.CLIENT_KEY);
         ParseUser.enableAutomaticUser();
-        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/source_code_pro_regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
-        );
     }
 }
