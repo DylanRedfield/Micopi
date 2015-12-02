@@ -89,4 +89,7 @@ public class Keys {
     public static int FRAGMENT_REQUEST_CODE = 0;
     public static String EXTRA_FRIENDS_LIST = "me.dylanredfield.micopi.FRIENDS_LIST";
     public static String EXTRA_GAME_OBJ_ID = "me.dylanredfield.micopi.OBJ_ID_EXTRA";
+    public static int REFRESH_LIST_RESULT_CODE = 2;
+    public static int GAME_LIST_REQUEST_CODE = 0;
+    public static int CREATED_GAME_RESULT_CODE = 0;
 }

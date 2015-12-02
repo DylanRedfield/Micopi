@@ -14,11 +14,11 @@ import java.util.List;
 import me.dylanredfield.micopi.util.Keys;
 import me.dylanredfield.micopi.R;
 
-public class SelectLangListAdapter extends BaseAdapter {
+public class DialogListAdapter extends BaseAdapter {
     private List<ParseObject> mLangList;
     private Activity mActivity;
 
-    public SelectLangListAdapter(Activity activity, List<ParseObject> list) {
+    public DialogListAdapter(Activity activity, List<ParseObject> list) {
         mActivity = activity;
         mLangList = list;
     }
@@ -49,19 +49,19 @@ public class SelectLangListAdapter extends BaseAdapter {
         Typeface font = Typeface.createFromAsset(mActivity.getAssets(),
                 "source_code_pro_regular.ttf");
         TextView lineNum = (TextView) view.findViewById(R.id.line_num);
-        TextView lang = (TextView) view.findViewById(R.id.lang);
+        TextView bulk = (TextView) view.findViewById(R.id.lang);
 
         lineNum.setTypeface(font);
-        lang.setTypeface(font);
+        bulk.setTypeface(font);
         lineNum.setText("" + (i + 1) );
 
         if (mLangList.get(i).getClassName().equals(Keys.KEY_LANGUAGE)) {
-            lang.setText(mLangList.get(i).getString(Keys.NAME_STR));
+            bulk.setText(mLangList.get(i).getString(Keys.NAME_STR));
         } else if (mLangList.get(i).getClassName().equals(Keys.KEY_GAME_DIFFICULTY)) {
-            lang.setText(mLangList.get(i).getString(Keys.DIFFICULTY_STRING));
+            bulk.setText(mLangList.get(i).getString(Keys.DIFFICULTY_STRING));
         } else if (mLangList.get(i).getClassName().equals(Keys.KEY_USER)) {
-            lang.setText(mLangList.get(i).getString(Keys.USERNAME_STR));
-            lang.setTextColor(mActivity.getResources().getColor(R.color.text_blue));
+            bulk.setText(mLangList.get(i).getString(Keys.USERNAME_STR));
+            bulk.setTextColor(mActivity.getResources().getColor(R.color.text_blue));
         }
 
         return view;

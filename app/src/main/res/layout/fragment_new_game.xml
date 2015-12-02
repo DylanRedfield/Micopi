@@ -293,7 +293,7 @@
         android:padding="12dp">
 
         <Button
-            android:id="@+id/start_game"
+            android:id="@+id/start_game_leader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_courner_rect"

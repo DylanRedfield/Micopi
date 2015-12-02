@@ -32,6 +32,7 @@ import java.util.List;
 import me.dylanredfield.micopi.activity.LobbyActivity;
 import me.dylanredfield.micopi.activity.RegisterActivity;
 import me.dylanredfield.micopi.activity.SignInActivity;
+import me.dylanredfield.micopi.dialog.AcceptInviteDialog;
 import me.dylanredfield.micopi.dialog.NewGameDialog;
 import me.dylanredfield.micopi.util.Helpers;
 import me.dylanredfield.micopi.util.Keys;
@@ -47,6 +48,7 @@ public class GameListFragment extends Fragment {
     private ActionButton mActionButton;
     private ParseUser mCurrentUser;
     private Typeface mFont;
+    private Fragment mFragment;
     private ProgressDialog mProgressDialog;
 
     @Override
@@ -65,6 +67,10 @@ public class GameListFragment extends Fragment {
 
     public void getDefaultValues() {
         mCurrentUser = ParseUser.getCurrentUser();
+
+        if (mFragment == null) {
+            mFragment = this;
+        }
 
         mProgressDialog = new ProgressDialog(getActivity());
         mProgressDialog.setMessage("Loading..");
@@ -87,6 +93,7 @@ public class GameListFragment extends Fragment {
             public void onClick(View view) {
 
                 NewGameDialog dialog = new NewGameDialog(getActivity());
+                dialog.setTargetFragment(mFragment, 0);
                 dialog.show(getFragmentManager(), null);
             }
         });
@@ -94,10 +101,17 @@ public class GameListFragment extends Fragment {
         mGameListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(), LobbyActivity.class);
-                intent.putExtra(Keys.EXTRA_GAME_OBJ_ID,
-                        ((ParseObject) mListAdapter.getItem(i)).getObjectId());
-                startActivity(intent);
+                if (view.getTag() != null && view.getTag().equals("invite")) {
+                    AcceptInviteDialog dialog = AcceptInviteDialog.newInstance();
+                    dialog.setGame((ParseObject) mListAdapter.getItem(i));
+                    dialog.show(getFragmentManager(), null);
+
+                } else {
+                    Intent intent = new Intent(getActivity(), LobbyActivity.class);
+                    intent.putExtra(Keys.EXTRA_GAME_OBJ_ID,
+                            ((ParseObject) mListAdapter.getItem(i)).getObjectId());
+                    startActivityForResult(intent, Keys.GAME_LIST_REQUEST_CODE);
+                }
             }
         });
     }
@@ -137,6 +151,9 @@ public class GameListFragment extends Fragment {
         gameQuery6.whereEqualTo("hasStarted", false);
         gameQuery6.whereEqualTo("players", mCurrentUser);
 
+        ParseQuery gameQuery7 = ParseQuery.getQuery("Game");
+        gameQuery7.whereEqualTo("hasStarted", true);
+        gameQuery7.whereEqualTo("players", mCurrentUser);
         ArrayList<ParseQuery<ParseObject>> params = new ArrayList<>();
         params.add(gameQuery1);
         params.add(gameQuery2);
@@ -144,6 +161,7 @@ public class GameListFragment extends Fragment {
         params.add(gameQuery4);
         params.add(gameQuery5);
         params.add(gameQuery6);
+        params.add(gameQuery7);
 
         ParseQuery<ParseObject> gamesQuery = ParseQuery.or(params);
         gamesQuery.orderByDescending("updatedAt");
@@ -233,12 +251,13 @@ public class GameListFragment extends Fragment {
                             ((ParseObject) p.get(Keys.INVITE_STARTER_POINT)).getObjectId()
                                     .equals(mCurrentUser.getObjectId())) {
                         isLobby = true;
-                        lobbyList.add(p);
                     }
                 }
                 if (!isLobby) {
                     // Is invite
                     invitesList.add(p);
+                } else {
+                    lobbyList.add(p);
                 }
 
             } else {
@@ -249,7 +268,8 @@ public class GameListFragment extends Fragment {
         Log.d("SortLog", invitesList.toString() + "\n" +
                 yourTurnList.toString() + "\n" +
                 theirTurnList.toString() + "\n" +
-                lobbyList.toString() + "\n");
+                lobbyList.toString() + "\n" +
+                mQueryList.toString());
         mListAdapter.setList(invitesList, yourTurnList, theirTurnList, lobbyList);
     }
 
@@ -285,6 +305,30 @@ public class GameListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("AdapterNotify", "Trigger2");
+        if (mListAdapter != null && requestCode == Keys.GAME_LIST_REQUEST_CODE
+                && resultCode == Keys.CREATED_GAME_RESULT_CODE && data != null) {
+            mQueryList.add(ParseObject.createWithoutData(Keys.KEY_GAME,
+                    data.getStringExtra(Keys.EXTRA_GAME_OBJ_ID)));
+            sortQuery();
+            mListAdapter.notifyDataSetChanged();
+            Log.d("AdapterNotify", "Success2");
+        } else if (requestCode == Keys.GAME_LIST_REQUEST_CODE
+                && resultCode == Keys.REFRESH_LIST_RESULT_CODE && data != null) {
+            for (ParseObject p : mQueryList) {
+                if (p.getObjectId().equals(data.getStringExtra(Keys.EXTRA_GAME_OBJ_ID))) {
+                    mQueryList.remove(p);
+                    break;
+                }
+            }
+            sortQuery();
+            mListAdapter.notifyDataSetChanged();
+        }
+    }
+
     public class GameListAdapter extends BaseAdapter {
         private TextView mSeparator;
         private TextView mLine1;
@@ -306,6 +350,7 @@ public class GameListFragment extends Fragment {
             if (convertView == null) {
                 convertView = getLayoutInflater(null).inflate(R.layout.row_game, null);
             }
+            Log.d("Position", "" + position);
             mSeparator = (TextView) convertView.findViewById(R.id.separator);
             mLine1 = (TextView) convertView.findViewById(R.id.line_1);
             mLine2 = (TextView) convertView.findViewById(R.id.line_2);
@@ -377,11 +422,12 @@ public class GameListFragment extends Fragment {
 
                 mString2 = getPlayersString(position, true);
                 mColor2 = "" + getResources().getColor(R.color.player_list_blue);
+                convertView.setTag("invite");
 
             } else if (mYourTurnList.size() > 0 && position < mInvitesList.size()
                     + mYourTurnList.size()) {
                 mString1 = "game";
-                mColor1 = "" + getResources().getColor(R.color.game_orange);
+                mColor1 = "" + getResources().getColor(R.color.text_orange);
 
                 mString2 = getPlayersString(position, false);
                 mColor2 = "" + getResources().getColor(R.color.player_list_blue);
@@ -452,6 +498,7 @@ public class GameListFragment extends Fragment {
                 , ArrayList<ParseObject> yourTurnList
                 , ArrayList<ParseObject> theirTurnList
                 , ArrayList<ParseObject> lobbyList) {
+            mFullList.clear();
 
             mInvitesList = invitesList;
             mYourTurnList = yourTurnList;

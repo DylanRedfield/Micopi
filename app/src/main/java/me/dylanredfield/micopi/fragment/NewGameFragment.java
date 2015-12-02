@@ -1,5 +1,7 @@
 package me.dylanredfield.micopi.fragment;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ public class NewGameFragment extends Fragment {
     private SelectPlayersDialog mPlayersDialog;
     private TextView mSelectDifficulty;
     private SelectDifficultyDialog mDifficultyDialog;
-
+    private ProgressDialog mProgressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstance) {
@@ -61,7 +64,6 @@ public class NewGameFragment extends Fragment {
         mFont = Typeface.createFromAsset(getActivity().getAssets(), "source_code_pro_regular.ttf");
         setLineNumbers();
 
-
         TextView newGameTV = (TextView) mView.findViewById(R.id.new_game);
         TextView selectLangLabel = (TextView) mView.findViewById(R.id.select_lang_label);
         TextView difficultyLabel = (TextView) mView.findViewById(R.id.select_difficult_label);
@@ -70,7 +72,7 @@ public class NewGameFragment extends Fragment {
         mSelectPlayers = (TextView) mView.findViewById(R.id.select_players);
         mLayout2 = (LinearLayout) mView.findViewById(R.id.layout_2);
         mLayout3 = (LinearLayout) mView.findViewById(R.id.layout_3);
-        mStartGame = (Button) mView.findViewById(R.id.start_game);
+        mStartGame = (Button) mView.findViewById(R.id.start_game_leader);
         mSelectDifficulty = (TextView) mView.findViewById(R.id.select_difficulty);
 
         newGameTV.setTypeface(mFont);
@@ -94,6 +96,7 @@ public class NewGameFragment extends Fragment {
         mNewGame.put(Keys.IS_PUBLIC_BOOL, false);
         mNewGame.put(Keys.IS_INVITE_BOOL, true);
         mNewGame.put(Keys.NUM_PLAYERS_NUM, 1);
+        mNewGame.add(Keys.PLAYERS_ARR, ParseUser.getCurrentUser());
 
 
         mLangDialog = SelectLangDialog.newInstance();
@@ -102,6 +105,10 @@ public class NewGameFragment extends Fragment {
         mPlayersDialog.setTargetFragment(this, 0);
         mDifficultyDialog = SelectDifficultyDialog.newInstance();
         mDifficultyDialog.setTargetFragment(this, 0);
+
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading...");
+        mProgressDialog.setCancelable(false);
         setDefaultText();
     }
 
@@ -177,6 +184,27 @@ public class NewGameFragment extends Fragment {
                 mDifficultyDialog.show(getFragmentManager(), null);
             }
         });
+        mStartGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mProgressDialog.show();
+                mNewGame.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        mProgressDialog.dismiss();
+                        if (e == null) {
+                            Intent data = new Intent();
+                            data.putExtra(Keys.EXTRA_GAME_OBJ_ID, mNewGame.getObjectId());
+                            getActivity().setResult(Keys.CREATED_GAME_RESULT_CODE,
+                                    data);
+                            getActivity().finish();
+                        } else {
+                            Helpers.showDialog("Whoops", e.getMessage(), getActivity());
+                        }
+                    }
+                });
+            }
+        });
     }
 
     public void queryParse() {
@@ -232,6 +260,7 @@ public class NewGameFragment extends Fragment {
     public TextView getSelectPlayers() {
         return mSelectPlayers;
     }
+
     public TextView getSelectDifficulty() {
         return mSelectDifficulty;
     }

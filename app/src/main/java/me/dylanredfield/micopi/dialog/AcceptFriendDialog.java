@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -51,7 +50,7 @@ public class AcceptFriendDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        mView = inflater.inflate(R.layout.dialog_accept_friend, null);
+        mView = inflater.inflate(R.layout.dialog_accept, null);
         builder.setView(mView);
 
         setDefaultValues();
