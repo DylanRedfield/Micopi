@@ -44,7 +44,7 @@ public class LineNumberEditText extends EditText {
             "\\b(attribute|const|uniform|varying|break|continue|" +
                     "do|for|while|if|else|in|out|inout|float|int|void|bool|true|false|" +
                     "lowp|mediump|highp|precision|invariant|discard|return|mat2|mat3|" +
-                    "mat4|vec2|vec3|vec4|ivec2|ivec3|ivec4|bvec2|bvec3|bvec4|sampler2D|" +
+                    "mat4|vec2|vec3|vec4|ivec2|ivec3|ivec4|bvec2|String|bvec3|bvec4|sampler2D|" +
                     "samplerCube|struct|gl_Vertex|gl_FragCoord|gl_FragColor)\\b");
     private static final Pattern builtins = Pattern.compile(
             "\\b(radians|degrees|sin|cos|tan|asin|acos|atan|pow|" +

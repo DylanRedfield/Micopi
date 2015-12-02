@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -65,7 +66,12 @@ public class GameFragment extends Fragment {
         mGame.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
-                queryForCurrentRound();
+                if (e == null) {
+                    queryForCurrentRound();
+                } else {
+                    mProgressDialog.dismiss();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -77,7 +83,11 @@ public class GameFragment extends Fragment {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 mProgressDialog.dismiss();
-                Log.d("CurrentRound", "" + mRound.getInt(Keys.ROUND_NUM));
+                if (e == null) {
+
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
