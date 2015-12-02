@@ -269,6 +269,7 @@ public class LobbyFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), GameActivity.class);
+                i.putExtra(Keys.EXTRA_GAME_OBJ_ID, mGame.getObjectId());
                 startActivity(i);
             }
         });

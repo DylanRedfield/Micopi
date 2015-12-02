@@ -39,4 +39,10 @@
     <string name="difficulty_label">// Difficulty</string>
     <string name="allow_public_to_join">Allow Public to Join: </string>
     <string name="edit_lobby_label">//EditLobby</string>
+    <string name="compile">compile()</string>
+    <string name="info">showInfo()</string>
+    <string name="save">:w</string>
+    <string name="submit">submit()</string>
+
 </resources>
+
