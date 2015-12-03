@@ -3,35 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-<<<<<<< HEAD
-    android:background="@color/light_grey"
+    android:background="@color/dark_grey"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/white"
-        android:background="@color/dark_grey"
-        android:textSize="18sp" />
+        android:padding="12dp"
+        android:background="@color/splash_background"
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/challenge_text"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="14sp" />
-=======
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/challenge_title"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
->>>>>>> 70bbad87695be47d0d20cad3249eefa3f317225a
+        android:textSize="16sp" />
 </LinearLayout>

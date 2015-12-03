@@ -56,6 +56,7 @@ public class Keys {
     public static String PLAYERS_NOT_DONE_ARR = "playersNotDone";
     public static String ROUND_NUM = "round";
     public static String WINNER_POINT = "winner";
+    public static String CHALLENGE_POINT = "Challenge";
 
     // Language
     public static String KEY_LANGUAGE = "Language";
@@ -72,6 +73,7 @@ public class Keys {
     public static String POWER_UPS_USED_NUM = "powerUpsUsed";
     public static String SUBMISSION_FILE = "submissionFile";
     public static String SUBMISSION_STR = "submissionString";
+    public static String CAN_EDIT_BOOL = "canEdit";
 
     // FriendRequest
     public static String KEY_FRIEND_REQUEST = "FriendRequest";
@@ -82,6 +84,11 @@ public class Keys {
     public static String SEARCH_FOR_LOBBY_CLOUD = "searchForLobby";
     public static String SEARCH_FOR_LOBBY_LANGUAGE_ID_STR = "searchForLobby";
     public static String SEARCH_FOR_LOBBY_USER_POINT = "user";
+
+    // Challenge
+    public static String KEY_CHALLENGE = "Challenge";
+    public static String DESCRIPTION_STR = "description";
+    //public static String NAME_STR = "name";
 
     // Other
     public static int USERNAME_LENGTH = 16;
