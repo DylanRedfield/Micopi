@@ -51,7 +51,7 @@ public class LobbyFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_lobby, null, false);
 
         setDefault();
-        setDefaultText();
+        defaultValues();
         fetchGame();
         setListeners();
 
@@ -65,8 +65,9 @@ public class LobbyFragment extends Fragment {
         if (mFragment == null) {
             mFragment = this;
         }
-        ArrayList<TextView> lineNumbers = new ArrayList<>();
 
+        // Makes it easier to change things to all line numbers
+        ArrayList<TextView> lineNumbers = new ArrayList<>();
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_1));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_2));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_3));
@@ -275,7 +276,7 @@ public class LobbyFragment extends Fragment {
         });
     }
 
-    public void setDefaultText() {
+    public void defaultValues() {
         mLangText.setText(Html.fromHtml(Helpers.getHtmlString("game", ""
                 + getResources().getColor(R.color.text_orange)) + ".lang = "
                 + Helpers.getHtmlString("\" \"", "" +

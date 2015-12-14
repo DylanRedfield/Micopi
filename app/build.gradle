@@ -31,4 +31,5 @@ dependencies {
     compile files('libs/PPNS-1.10.2.jar')
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile files('libs/JavaPrettify-1.2.1.jar')
+    compile 'net.danlew:android.joda:2.9.0'
 }

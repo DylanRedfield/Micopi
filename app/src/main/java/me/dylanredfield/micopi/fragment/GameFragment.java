@@ -23,6 +23,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class GameFragment extends Fragment {
                 .getStringExtra(Keys.EXTRA_GAME_OBJ_ID));
 
 
+        // Created but can only be displayed when all information is queried
         mMidGameDialog = InfoMidGameDialog.newInstance();
         mMidGameDialog.setTargetFragment(this, 0);
     }
@@ -89,6 +91,7 @@ public class GameFragment extends Fragment {
         mProgressDialog.setMessage("Loading...");
     }
 
+    // TODO due all asynchronously
     public void queryForGameInformation() {
         mProgressDialog.show();
         mGame.fetchInBackground(new GetCallback<ParseObject>() {
@@ -165,9 +168,10 @@ public class GameFragment extends Fragment {
         mSubmission.put(Keys.CAN_EDIT_BOOL, true);
         mSubmission.put(Keys.PLAYER_POINT, mCurrentUser);
         mSubmission.put(Keys.POWER_UPS_USED_NUM, 0);
+
         // TODO add endDate
-        Date endDate = new Date();
-        endDate.
+        Calendar cal = Calendar.getInstance();
+        //cal.set(Calendar.MIN)
         mSubmission.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

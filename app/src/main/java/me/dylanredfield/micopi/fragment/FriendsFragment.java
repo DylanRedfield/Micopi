@@ -48,7 +48,7 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState) {
         mView = inflater.inflate(R.layout.fragment_friends, null, false);
 
-        setDefaultValues();
+        defaultValues();
 
         return mView;
     }
@@ -60,7 +60,10 @@ public class FriendsFragment extends Fragment {
         setListeners();
     }
 
-    public void setDefaultValues() {
+    public void defaultValues() {
+        if (mFragment == null) {
+            mFragment = this;
+        }
         mFont = Typeface.createFromAsset(getActivity().getAssets(), "source_code_pro_regular.ttf");
         mListView = (ListView) mView.findViewById(R.id.friends_list);
 
@@ -70,18 +73,21 @@ public class FriendsFragment extends Fragment {
 
         mAddFriend = (ActionButton) mView.findViewById(R.id.add_friend);
 
+        // Full list includes friend requests
         mFullList = new ArrayList<>();
+
         mFriendsList = new ArrayList<>();
         mCurrentUser = ParseUser.getCurrentUser();
 
-        if (mFragment == null) {
-            mFragment = this;
-        }
+
     }
 
     public void queryParse() {
         // TODO speed this query up by doing async
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
+
+        // TODO consider fetching user first to ensure it runs
+        // Not guaranteed for else to finish fetch first. Test this
         mCurrentUser.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
@@ -90,9 +96,7 @@ public class FriendsFragment extends Fragment {
                         mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
                             @Override
                             public void done(ParseObject parseObject, ParseException e) {
-                                Log.d("fetchInBackground", "true");
                                 inviteQuery();
-
                             }
                         });
                     } else {
@@ -115,9 +119,9 @@ public class FriendsFragment extends Fragment {
         inviteQuery.include(Keys.FROM_USER_POINT);
         inviteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> list2, ParseException e) {
+            public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
-                    mFullList.addAll(list2);
+                    mFullList.addAll(list);
                     mFullList.addAll(mFriendsList);
                     mAdapter = new FriendsAdapter(mFragment);
                     mListView.setAdapter(mAdapter);
