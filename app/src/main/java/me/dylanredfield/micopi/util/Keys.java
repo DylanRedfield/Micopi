@@ -30,6 +30,7 @@ public class Keys {
     // Game
     public static String KEY_GAME = "Game";
     public static String LANGUAGE_POINT = "Language";
+    public static String GAME_POINT = "Game";
     public static String CHALLENGE_DESCRIPTION_STR= "challengeDescription";
     public static String PLAYERS_ARR = "players";
     public static String HAS_STARTED_BOOL = "hasStarted";
@@ -55,8 +56,11 @@ public class Keys {
     public static String PLAYERS_DONE_ARR = "playersDone";
     public static String PLAYERS_NOT_DONE_ARR = "playersNotDone";
     public static String ROUND_NUM = "round";
+    public static String END_DATE_DATE = "endDate";
     public static String WINNER_POINT = "winner";
     public static String CHALLENGE_POINT = "Challenge";
+    public static String LEADER_POINT = "leader";
+    public static String PLAYERS_STARTED = "playersStarted";
 
     // Language
     public static String KEY_LANGUAGE = "Language";
@@ -99,4 +103,14 @@ public class Keys {
     public static int REFRESH_LIST_RESULT_CODE = 2;
     public static int GAME_LIST_REQUEST_CODE = 0;
     public static int CREATED_GAME_RESULT_CODE = 0;
+
+    // GameTypes
+    public static String OVER = "over";
+    public static String PRIVATE_STARTED_YOUR_TURN_PLAYER = "private_started_your_turn_player";
+    public static String PRIVATE_STARTED_THEIR_TURN_PLAYER = "private_started_their_turn_player";
+    public static String PUBLIC_STARTED_YOUR_TURN_PLAYER = "public_started_your_turn_player";
+    public static String PUBLIC_STARTED_THEIR_TURN_PLAYER = "public_started_their_turn_player";
+    public static String PRIVATE_LOBBY_STARTER = "private_lobby_start";
+    public static String PRIVATE_LOBBY_PLAYER = "private_lobby_player";
+    public static String PUBLIC_LOBBY = "public_lobby";
 }

@@ -27,4 +27,12 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="16sp" />
+    <TextView
+        android:id="@+id/time_remaining"
+        android:background="@color/splash_background"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

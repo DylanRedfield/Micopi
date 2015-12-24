@@ -11,15 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.GetCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import me.dylanredfield.micopi.activity.GameActivity;
 import me.dylanredfield.micopi.dialog.AddPlayersToLobbyDialog;
@@ -36,6 +42,7 @@ public class LobbyFragment extends Fragment {
     private TextView mDifficultyText;
     private Button mEditLobby;
     private Button mStartGame;
+    private ParseUser mCurrentUser;
     private ParseObject mGame;
     private String mType;
     private Button mInviteFriends;
@@ -43,6 +50,7 @@ public class LobbyFragment extends Fragment {
     private AddPlayersToLobbyDialog mAddPlayersDialog;
     private EditLobbyDialog mEditLobbyDialog;
     private Button mPlay;
+    private ParseObject mCurrentRound;
     private boolean mIsLeader;
     private boolean mIsYourTurn;
 
@@ -61,6 +69,7 @@ public class LobbyFragment extends Fragment {
     }
 
     public void setDefault() {
+        mCurrentUser = ParseUser.getCurrentUser();
 
         if (mFragment == null) {
             mFragment = this;
@@ -68,14 +77,14 @@ public class LobbyFragment extends Fragment {
 
         // Makes it easier to change things to all line numbers
         ArrayList<TextView> lineNumbers = new ArrayList<>();
-        lineNumbers.add((TextView) mView.findViewById(R.id.line_id_1));
+/*        lineNumbers.add((TextView) mView.findViewById(R.id.line_id_1));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_2));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_3));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_4));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_5));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_6));
         lineNumbers.add((TextView) mView.findViewById(R.id.line_id_7));
-        lineNumbers.add((TextView) mView.findViewById(R.id.line_id_8));
+        lineNumbers.add((TextView) mView.findViewById(R.id.line_id_8));*/
 
         Typeface font = Typeface.createFromAsset(getResources().getAssets(),
                 "source_code_pro_regular.ttf");
@@ -197,11 +206,16 @@ public class LobbyFragment extends Fragment {
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
                     Log.d("IHateThisApp", "FUCK");
-                    setViewsFromType(checkType());
-                    setTextAfterFetch();
-                    if (mType.equals("private_lobby") && !mIsLeader) {
-                        setPlayersDialogList();
+                    if (mGame.getBoolean(Keys.HAS_STARTED_BOOL)) {
+                        queryForCurrentRound();
+                    } else {
+                        setViewsFromType(checkType());
+                        setTextAfterFetch();
+                        if (mType.equals("private_lobby") && !mIsLeader) {
+                            setPlayersDialogList();
+                        }
                     }
+
                     // TODO show button
                 } else {
                     // TODO error
@@ -209,6 +223,30 @@ public class LobbyFragment extends Fragment {
             }
         });
 
+    }
+
+    public void queryForCurrentRound() {
+        ParseQuery<ParseObject> currentRoundQuery = ParseQuery.getQuery(Keys.KEY_GAME_ROUND);
+        currentRoundQuery.whereEqualTo(Keys.GAME_POINT, mGame);
+        currentRoundQuery.include(Keys.LEADER_POINT);
+        currentRoundQuery.include(Keys.PLAYERS_DONE_ARR);
+        currentRoundQuery.include(Keys.PLAYERS_NOT_DONE_ARR);
+        currentRoundQuery.include(Keys.LEADER_POINT);
+        currentRoundQuery.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null) {
+                    mCurrentRound = parseObject;
+                    setViewsFromType(checkType());
+                    setTextAfterFetch();
+                    if (mType.equals("private_lobby") && !mIsLeader) {
+                        setPlayersDialogList();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public ParseObject getGame() {
@@ -231,37 +269,85 @@ public class LobbyFragment extends Fragment {
                 .equals(ParseUser.getCurrentUser().getObjectId());
         if (mGame.getBoolean(Keys.IS_OVER_BOOL)) {
             type = "over";
-        } else if (mGame.getBoolean(Keys.IS_INVITE_BOOL)) {
-            if (mGame.getBoolean(Keys.HAS_STARTED_BOOL)) {
-                type = "private_started";
-            } else {
-                type = "private_lobby";
+        } else if (mGame.getBoolean(Keys.HAS_STARTED_BOOL)) {
+            boolean isContained = false;
+            List<ParseObject> playersDoneArray = mCurrentRound.getList(Keys.PLAYERS_DONE_ARR);
+            for (ParseObject p : playersDoneArray) {
+                if (p.getObjectId().equals(mCurrentUser.getObjectId())) {
+                    isContained = true;
+                }
             }
-        } else if (!mGame.getBoolean(Keys.IS_INVITE_BOOL)) {
-            if (mGame.getBoolean(Keys.HAS_STARTED_BOOL)) {
-                type = "public_started";
+            if (mGame.getBoolean(Keys.IS_INVITE_BOOL)) {
+                if (!isContained) {
+                    type = "private_started_your_turn_player";
+                } else {
+                    type = "private_started_their_turn_player";
+                }
+            } else {
+                if (!isContained) {
+                    type = "public_started_your_turn_player";
+                } else {
+                    type = "public_started_their_turn_player";
+                }
+            }
+        } else {
+            if (mGame.getBoolean(Keys.IS_INVITE_BOOL)) {
+                if (mGame.getParseObject(Keys.INVITE_STARTER_POINT).getObjectId()
+                        .equals(mCurrentUser.getObjectId())) {
+                    type = "private_lobby_start";
+                } else {
+                    type = "private_lobby_player";
+                }
             } else {
                 type = "public_lobby";
             }
         }
+
+        Log.d("TypeOfLobby", type);
 
         mType = type;
         return type;
     }
 
     public void setViewsFromType(String type) {
-        if (type.equals("private_lobby")) {
-            if (mIsLeader) {
-                mView.findViewById(R.id.leader_panel).setVisibility(View.VISIBLE);
-            } else {
-                mView.findViewById(R.id.lobby).setVisibility(View.VISIBLE);
-            }
-        } else if (type.equals("private_started") || type.equals("public_started")) {
+        if (type.equals(Keys.PRIVATE_LOBBY_STARTER)) {
+            mView.findViewById(R.id.leader_panel).setVisibility(View.VISIBLE);
+            checkIfCanStart();
+            mView.findViewById(R.id.invited_accepted_view).setVisibility(View.VISIBLE);
+        } else if (type.equals(Keys.PRIVATE_LOBBY_PLAYER)) {
+            mView.findViewById(R.id.lobby).setVisibility(View.VISIBLE);
+            mView.findViewById(R.id.invited_accepted_view).setVisibility(View.VISIBLE);
+        } else if (type.equals(Keys.PUBLIC_LOBBY)) {
+            mView.findViewById(R.id.invited_accepted_view).setVisibility(View.VISIBLE);
+        } else if (type.contains("your_turn")) {
             mView.findViewById(R.id.your_turn).setVisibility(View.VISIBLE);
             setPlayListener();
+        }
 
-        } else if (type.equals("public_lobby")) {
-            // TODO invite friends maybe?
+    }
+
+    public void checkIfCanStart() {
+        if (mGame.getList(Keys.PLAYERS_ARR).size() >= 3) {
+            Button startGame = (Button) mView.findViewById(R.id.leader_panel)
+                    .findViewById(R.id.start_game_leader);
+            startGame.setVisibility(View.VISIBLE);
+            startGame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    HashMap<String, Object> params = new HashMap<String, Object>();
+                    params.put("gameId", mGame.getObjectId());
+                    ParseCloud.callFunctionInBackground("createGameFromInvite", params,
+                            new FunctionCallback<HashMap<String, Object>>() {
+                                @Override
+                                public void done(HashMap<String, Object>
+                                                         stringObjectHashMap, ParseException e) {
+                                    ParseObject game = (ParseObject) stringObjectHashMap.get("game");
+                                    mGame = game;
+                                    // TODO updateUI
+                                }
+                            });
+                }
+            });
         }
     }
 

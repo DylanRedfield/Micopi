@@ -27,6 +27,7 @@ import com.parse.ParseUser;
 import com.software.shell.fab.ActionButton;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import me.dylanredfield.micopi.activity.LobbyActivity;
@@ -154,6 +155,14 @@ public class GameListFragment extends Fragment {
         ParseQuery gameQuery7 = ParseQuery.getQuery("Game");
         gameQuery7.whereEqualTo("hasStarted", true);
         gameQuery7.whereEqualTo("players", mCurrentUser);
+        gameQuery7.whereEqualTo("isOver", false);
+
+        ParseQuery gameQuery8 = ParseQuery.getQuery("Game");
+        gameQuery8.whereEqualTo("players", mCurrentUser);
+        gameQuery8.whereEqualTo("isOver", true);
+        gameQuery8.whereNotEqualTo("playersViewed", mCurrentUser);
+        gameQuery8.whereGreaterThanOrEqualTo("endDate", new Date());
+
         ArrayList<ParseQuery<ParseObject>> params = new ArrayList<>();
         params.add(gameQuery1);
         params.add(gameQuery2);
@@ -162,6 +171,7 @@ public class GameListFragment extends Fragment {
         params.add(gameQuery5);
         params.add(gameQuery6);
         params.add(gameQuery7);
+        params.add(gameQuery8);
 
         ParseQuery<ParseObject> gamesQuery = ParseQuery.or(params);
         gamesQuery.orderByDescending("updatedAt");
@@ -231,13 +241,18 @@ public class GameListFragment extends Fragment {
                 ParseObject currentRound = rounds.get(rounds.size() - 1);
                 List<ParseUser> playersNotDoneList =
                         currentRound.getList(Keys.PLAYERS_NOT_DONE_ARR);
+
+                boolean isDone = true;
                 for (int i = 0; i < playersNotDoneList.size(); i++) {
                     if (playersNotDoneList.get(i).getObjectId()
                             .equals(mCurrentUser.getObjectId())) {
-                        yourTurnList.add(p);
-                    } else if (i == playersNotDoneList.size() - 1) {
-                        theirTurnList.add(p);
+                        isDone = false;
                     }
+                }
+                if (isDone) {
+                    theirTurnList.add(p);
+                } else {
+                    yourTurnList.add(p);
                 }
             } else if (p.getBoolean(Keys.IS_INVITE_BOOL)) {
                 List<String> stringList = new ArrayList<>();

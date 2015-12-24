@@ -5,6 +5,8 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseUser;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import me.dylanredfield.micopi.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -13,6 +15,7 @@ public class Micopi extends Application {
     public void onCreate() {
         super.onCreate();
 
+        JodaTimeAndroid.init(this);
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this,

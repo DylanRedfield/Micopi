@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/default_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -88,13 +89,24 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/invited_accepted_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/line_id_3"
+                android:id="@+id/invited_top_blank_line_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/line_number_background"
@@ -200,6 +212,129 @@
                 android:textColor="@color/text_light_grey"
                 android:textSize="18sp" />
         </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/current_round_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/current_round_top_blank_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 3"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/current_round_label_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 1"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/current_round_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/display_leader_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 2"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_leader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingStart="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/display_players_done_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 5"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/display_players_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:paddingLeft="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/current_round_blank_line_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/line_number_background"
+                android:paddingEnd="4dp"
+                android:paddingStart="4dp"
+                android:text=" 3"
+                android:textColor="@color/text_light_grey"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <RelativeLayout

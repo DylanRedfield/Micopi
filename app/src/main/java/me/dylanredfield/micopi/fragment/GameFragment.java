@@ -15,17 +15,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
+import com.parse.FunctionCallback;
 import com.parse.GetCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.joda.time.DateTime;
+
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import me.dylanredfield.micopi.R;
 import me.dylanredfield.micopi.dialog.InfoMidGameDialog;
@@ -44,6 +49,7 @@ public class GameFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private InfoMidGameDialog mMidGameDialog;
     private ParseObject mSubmission;
+    private DateTime mEndDate;
     private boolean mSaved = true;
 
     @Override
@@ -110,13 +116,18 @@ public class GameFragment extends Fragment {
 
     public void queryForCurrentRound() {
         List<ParseObject> roundList = mGame.getList(Keys.ROUNDS_ARR);
-        mRound = roundList.get(roundList.size() - 1);
+        mRound = roundList.get(roundList.size() - 1);                    List<ParseUser> tempList = mRound.getList(Keys.PLAYERS_STARTED);
+
+                    Log.d("objectId test", tempList.get(0).getObjectId());
         mRound.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
                     mMidGameDialog.setRound(mRound);
                     mChallenge = (ParseObject) mRound.get(Keys.CHALLENGE_POINT);
+                    mEndDate = new DateTime(mRound.getDate(Keys.END_DATE_DATE));
+                    mMidGameDialog.setEndDate(mEndDate);
+
 
                     fetchChallenge();
 
@@ -149,6 +160,7 @@ public class GameFragment extends Fragment {
     public void queryForSubmission() {
         ParseQuery<ParseObject> submissionQuery = ParseQuery.getQuery(Keys.KEY_SUBMISSION);
         submissionQuery.whereEqualTo(Keys.GAME_ROUND_POINT, mRound);
+        submissionQuery.whereEqualTo(Keys.PLAYER_POINT, mCurrentUser);
         submissionQuery.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
@@ -162,16 +174,24 @@ public class GameFragment extends Fragment {
         });
     }
 
+    public DateTime getEndDate() {
+        return mEndDate;
+    }
+
     public void makeSubmission() {
         mSubmission = ParseObject.create(Keys.KEY_SUBMISSION);
         mSubmission.put(Keys.GAME_ROUND_POINT, mRound);
         mSubmission.put(Keys.CAN_EDIT_BOOL, true);
         mSubmission.put(Keys.PLAYER_POINT, mCurrentUser);
         mSubmission.put(Keys.POWER_UPS_USED_NUM, 0);
+        mRound.add(Keys.PLAYERS_STARTED, mCurrentUser);
+        mRound.saveInBackground();
 
         // TODO add endDate
         Calendar cal = Calendar.getInstance();
-        //cal.set(Calendar.MIN)
+        cal.add(Calendar.MINUTE, 30);
+
+        mSubmission.put(Keys.END_DATE_DATE, cal.getTime());
         mSubmission.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -195,10 +215,43 @@ public class GameFragment extends Fragment {
             case R.id.info:
                 mMidGameDialog.show(getFragmentManager(), null);
                 return true;
+            case R.id.submit:
+                Log.d("Submit", "Click!");
+                mSubmission.put(Keys.SUBMISSION_STR, mEditText.getText().toString());
+                mSubmission.put(Keys.CAN_EDIT_BOOL, false);
+                mSubmission.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.d("Submit", "saved");
+                            HashMap<String, Object> params = new HashMap<>();
+                            params.put("gameRoundId", mRound.getObjectId());
+                            ParseCloud.callFunctionInBackground("handleSubmission", params, new FunctionCallback<HashMap<String, Object>>() {
+                                @Override
+                                public void done(HashMap<String, Object> stringObjectHashMap, ParseException e) {
+                                    Log.d("Submit", "cloudCode");
+                                    getActivity().finish();
+                                    if (e != null) {
+                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                return true;
             case R.id.save:
                 mSubmission.put(Keys.SUBMISSION_STR, mEditText.getText().toString());
-                mSubmission.saveInBackground();
-                return true;
+                mSubmission.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             default:
                 return false;
         }

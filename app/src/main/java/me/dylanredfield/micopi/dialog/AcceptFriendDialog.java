@@ -95,6 +95,10 @@ public class AcceptFriendDialog extends DialogFragment {
                                                      ParseException e) {
                                         if (e == null) {
                                             dismiss();
+                                            ParseObject.createWithoutData(Keys.KEY_USER,
+                                                    mExtras.getString(Keys.EXTRA_GAME_OBJ_ID))
+                                                    .deleteInBackground();
+
 
                                         } else {
                                         }
