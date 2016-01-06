@@ -89,7 +89,7 @@ public class NewGameFragment extends Fragment {
                 .getColor(R.color.text_orange)) + " = new Game();"));
 
         mNewGame = ParseObject.create(Keys.KEY_GAME);
-        mNewGame.put(Keys.DESIRED_NUM_PLAYERS, 4);
+        mNewGame.put(Keys.DESIRED_NUM_PLAYERS, 1);
         mNewGame.put(Keys.HAS_STARTED_BOOL, false);
         mNewGame.put(Keys.INVITE_STARTER_POINT, ParseUser.getCurrentUser());
         mNewGame.put(Keys.IS_OVER_BOOL, false);

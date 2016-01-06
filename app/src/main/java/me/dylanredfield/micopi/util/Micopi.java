@@ -3,6 +3,7 @@ package me.dylanredfield.micopi.util;
 import android.app.Application;
 
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -20,6 +21,7 @@ public class Micopi extends Application {
 
         Parse.initialize(this,
                 Keys.APPLICATION_ID, Keys.CLIENT_KEY);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
         ParseUser.enableAutomaticUser();
     }
 }

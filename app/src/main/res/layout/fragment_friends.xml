@@ -21,6 +21,11 @@
         android:text="@string/no_friends"
         android:textColor="@color/white"
         android:textSize="16sp" />
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <com.software.shell.fab.ActionButton
         android:id="@+id/add_friend"

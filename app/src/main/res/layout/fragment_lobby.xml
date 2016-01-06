@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_grey"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/dark_grey"
+              android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/default_view"
@@ -25,7 +25,7 @@
                 android:paddingStart="4dp"
                 android:text=" 1"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/game_info_label"
@@ -34,7 +34,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +51,7 @@
                 android:paddingStart="4dp"
                 android:text=" 2"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/lang"
@@ -60,7 +60,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -77,7 +77,7 @@
                 android:paddingStart="4dp"
                 android:text=" 5"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/difficulty"
@@ -86,7 +86,7 @@
                 android:background="@color/dark_grey"
                 android:paddingLeft="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
 
@@ -114,7 +114,7 @@
                 android:paddingStart="4dp"
                 android:text=" 3"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -132,7 +132,7 @@
                 android:paddingStart="4dp"
                 android:text=" 4"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/invited_label"
@@ -141,7 +141,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -158,7 +158,7 @@
                 android:paddingStart="4dp"
                 android:text=" 5"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/accpeted_arr"
@@ -167,7 +167,7 @@
                 android:background="@color/dark_grey"
                 android:paddingLeft="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -184,7 +184,7 @@
                 android:paddingStart="4dp"
                 android:text=" 6"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/invited_arr"
@@ -193,7 +193,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -210,7 +210,7 @@
                 android:paddingStart="4dp"
                 android:text=" 7"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -235,7 +235,7 @@
                 android:paddingStart="4dp"
                 android:text=" 3"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -253,7 +253,7 @@
                 android:paddingStart="4dp"
                 android:text=" 1"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/current_round_label"
@@ -262,7 +262,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -279,7 +279,7 @@
                 android:paddingStart="4dp"
                 android:text=" 2"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/display_leader"
@@ -288,7 +288,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -305,7 +305,7 @@
                 android:paddingStart="4dp"
                 android:text=" 5"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/display_players_done"
@@ -314,7 +314,7 @@
                 android:background="@color/dark_grey"
                 android:paddingLeft="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -331,7 +331,7 @@
                 android:paddingStart="4dp"
                 android:text=" 3"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -361,12 +361,12 @@
                 android:layout_marginEnd="6dp"
                 android:text="@string/allow_public_to_join"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <Switch
                 android:id="@+id/public_switch"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
@@ -387,7 +387,7 @@
                 android:text="@string/edit_lobby"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
 
             <Button
                 android:id="@+id/start_game_leader"
@@ -402,7 +402,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -426,18 +426,28 @@
             android:text="@string/invite_friends"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </LinearLayout>
 
     <LinearLayout
-        android:id='@+id/your_turn'
+        android:id='@+id/your_turn_player'
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:background="@color/splash_background"
         android:gravity="center"
-        android:padding="4dp"
+        android:orientation="vertical"
+        android:padding="12dp"
         android:visibility="gone">
+
+        <TextView
+            android:id="@+id/time_remaining_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/play"
@@ -449,7 +459,61 @@
             android:text="@string/play"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16sp"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id='@+id/their_turn_player'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/splash_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/time_remaining_their_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id='@+id/leader_started'
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:background="@color/splash_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="12dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/time_remaining_leader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/select_winner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_courner_rect"
+            android:padding="4dp"
+            android:text="@string/play"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+    </LinearLayout>
 </LinearLayout>

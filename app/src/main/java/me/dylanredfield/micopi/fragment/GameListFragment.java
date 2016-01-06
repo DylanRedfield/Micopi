@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.internal.view.menu.MenuView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -51,6 +54,8 @@ public class GameListFragment extends Fragment {
     private Typeface mFont;
     private Fragment mFragment;
     private ProgressDialog mProgressDialog;
+    private ProgressBar mProgressBar;
+    private SwipeRefreshLayout mRefreshlayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -78,14 +83,15 @@ public class GameListFragment extends Fragment {
         mProgressDialog.setCancelable(false);
 
         mGameListView = (ListView) mView.findViewById(R.id.game_list);
+        mProgressBar = (ProgressBar) mView.findViewById(R.id.progress);
 
-        mQueryList = new ArrayList<>();
 
-        mListAdapter = new GameListAdapter();
         mActionButton = (ActionButton) mView.findViewById(R.id.action_button);
 
         mFont = Typeface.createFromAsset(getResources().getAssets()
                 , "source_code_pro_regular.ttf");
+
+        mRefreshlayout = (SwipeRefreshLayout) mView.findViewById(R.id.refresh_layout);
     }
 
     public void setListeners() {
@@ -115,10 +121,19 @@ public class GameListFragment extends Fragment {
                 }
             }
         });
+        mRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryGameList();
+            }
+        });
     }
 
 
     public void queryGameList() {
+        mQueryList = new ArrayList<>();
+
+        mListAdapter = new GameListAdapter();
         ParseQuery yourTurnQuery = ParseQuery.getQuery("GameRound");
 
         //TODO handle users names
@@ -184,11 +199,14 @@ public class GameListFragment extends Fragment {
         gamesQuery.include(Keys.PLAYERS_ARR);
         gamesQuery.include(Keys.INVITED_PLAYERS_ARR);
         gamesQuery.include("Language");
-        //mProgressDialog.show();
+        showProgress();
         gamesQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                mProgressDialog.dismiss();
+                if (mRefreshlayout.isRefreshing()) {
+                    mRefreshlayout.setRefreshing(false);
+                }
+                hideProgress();
                 if (e == null) {
                     for (ParseObject p : list) {
                         mQueryList.add(p);
@@ -249,6 +267,15 @@ public class GameListFragment extends Fragment {
                         isDone = false;
                     }
                 }
+                if (currentRound.getParseObject(Keys.LEADER_POINT).getObjectId()
+                        .equals(mCurrentUser.getObjectId())) {
+                    if (currentRound.getBoolean(Keys.IS_READY_FOR_LEADER_BOOL)) {
+                        isDone = false;
+                    } else {
+                        isDone = true;
+                    }
+                }
+
                 if (isDone) {
                     theirTurnList.add(p);
                 } else {
@@ -286,6 +313,18 @@ public class GameListFragment extends Fragment {
                 lobbyList.toString() + "\n" +
                 mQueryList.toString());
         mListAdapter.setList(invitesList, yourTurnList, theirTurnList, lobbyList);
+    }
+
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mGameListView.setVisibility(View.GONE);
+        mView.findViewById(R.id.empty_list).setVisibility(View.GONE);
+    }
+
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+        mGameListView.setVisibility(View.VISIBLE);
+        mView.findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
     }
 
     @Override

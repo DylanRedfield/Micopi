@@ -33,6 +33,7 @@
     <string name="add">add()</string>
     <string name="done">done()</string>
     <string name="players_label">//Players</string>
+    <string name="no_user_found">// No Users Found</string>
     <string name="start_game">startGame()</string>
     <string name="select_lang_label">// Select language</string>
     <string name="edit_lobby">editLobby()</string>
@@ -43,6 +44,8 @@
     <string name="info">showInfo()</string>
     <string name="save">:w</string>
     <string name="submit">submit()</string>
+    <string name="select_winner">selectWinner()</string>
+    <string name="select">select()</string>
 
 </resources>
 

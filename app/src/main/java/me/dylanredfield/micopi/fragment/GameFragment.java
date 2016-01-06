@@ -49,6 +49,7 @@ public class GameFragment extends Fragment {
     private ProgressDialog mProgressDialog;
     private InfoMidGameDialog mMidGameDialog;
     private ParseObject mSubmission;
+    private boolean mIsFirstView;
     private DateTime mEndDate;
     private boolean mSaved = true;
 
@@ -70,8 +71,8 @@ public class GameFragment extends Fragment {
         mCurrentUser = ParseUser.getCurrentUser();
 
 
-        mGame = ParseObject.createWithoutData(Keys.KEY_GAME, getActivity().getIntent()
-                .getStringExtra(Keys.EXTRA_GAME_OBJ_ID));
+        mGame = ParseObject.createWithoutData(Keys.KEY_GAME,
+                getActivity().getIntent().getStringExtra(Keys.EXTRA_GAME_OBJ_ID));
 
 
         // Created but can only be displayed when all information is queried
@@ -116,9 +117,9 @@ public class GameFragment extends Fragment {
 
     public void queryForCurrentRound() {
         List<ParseObject> roundList = mGame.getList(Keys.ROUNDS_ARR);
-        mRound = roundList.get(roundList.size() - 1);                    List<ParseUser> tempList = mRound.getList(Keys.PLAYERS_STARTED);
+        mRound = roundList.get(roundList.size() - 1);
+        List<ParseUser> tempList = mRound.getList(Keys.PLAYERS_STARTED);
 
-                    Log.d("objectId test", tempList.get(0).getObjectId());
         mRound.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
@@ -128,10 +129,23 @@ public class GameFragment extends Fragment {
                     mEndDate = new DateTime(mRound.getDate(Keys.END_DATE_DATE));
                     mMidGameDialog.setEndDate(mEndDate);
 
+                    for (int i = 0; i < mRound.getList(Keys.PLAYERS_STARTED).size(); i++) {
+                        if (((ParseObject) mRound.getList(Keys.PLAYERS_STARTED).get(i)).getObjectId()
+                                .equals(mCurrentUser.getObjectId())) {
+                            mIsFirstView = true;
+                        }
+                    }
+
 
                     fetchChallenge();
 
-                    queryForSubmission();
+                    if (mIsFirstView) {
+                        mRound.add(Keys.PLAYERS_STARTED, mCurrentUser);
+                        mRound.saveInBackground();
+                        makeSubmission();
+                    } else {
+                        queryForSubmission();
+                    }
 
 
                 } else {
@@ -165,10 +179,11 @@ public class GameFragment extends Fragment {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
+                    Log.d("queryForSub", mRound.getObjectId());
+                    Log.d("queryForSub", mCurrentUser.getObjectId());
                     mSubmission = parseObject;
-                } else if (e.getCode() == ParseException.OBJECT_NOT_FOUND) {
+                } else {
                     makeSubmission();
-
                 }
             }
         });
@@ -184,10 +199,8 @@ public class GameFragment extends Fragment {
         mSubmission.put(Keys.CAN_EDIT_BOOL, true);
         mSubmission.put(Keys.PLAYER_POINT, mCurrentUser);
         mSubmission.put(Keys.POWER_UPS_USED_NUM, 0);
-        mRound.add(Keys.PLAYERS_STARTED, mCurrentUser);
-        mRound.saveInBackground();
+        mSubmission.put(Keys.SUBMISSION_STR, "");
 
-        // TODO add endDate
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.MINUTE, 30);
 
@@ -198,9 +211,11 @@ public class GameFragment extends Fragment {
                 if (e != null) {
                     Toast.makeText(getActivity(), e.getMessage(),
                             Toast.LENGTH_SHORT).show();
+                    makeSubmission();
                 }
             }
         });
+
     }
 
     @Override

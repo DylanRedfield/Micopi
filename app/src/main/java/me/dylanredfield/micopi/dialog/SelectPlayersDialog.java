@@ -70,6 +70,7 @@ public class SelectPlayersDialog extends AbstractListViewDialog {
             public void onClick(View view) {
                 ParseObject newGame = ((NewGameFragment) getTargetFragment()).getNewGame();
                 newGame.put(Keys.INVITED_PLAYERS_ARR, mSelectedPlayersList);
+                newGame.put(Keys.DESIRED_NUM_PLAYERS, mSelectedPlayersList.size() + 1);
                 ((NewGameFragment) getTargetFragment()).getSelectPlayers()
                         .setText(Html.fromHtml(
                                 Helpers.getHtmlString("game", "" + getResources()

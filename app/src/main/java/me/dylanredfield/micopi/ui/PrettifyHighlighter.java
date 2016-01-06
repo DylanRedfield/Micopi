@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import prettify.PrettifyParser;
+import prettify.theme.ThemeDefault;
 import syntaxhighlight.ParseResult;
 import syntaxhighlight.Parser;
+import syntaxhighlight.SyntaxHighlighter;
 
 /**
  * Created by dylan_000 on 11/29/2015.

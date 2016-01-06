@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,6 +75,7 @@ public class AddFriendDialog extends DialogFragment {
 
 
         Dialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return dialog;
     }
@@ -132,21 +134,26 @@ public class AddFriendDialog extends DialogFragment {
             public void onClick(View view) {
                 ParseQuery<ParseUser> query = new ParseQuery<>(Keys.KEY_USER);
                 query.whereContains(Keys.USERNAME_STR, editText.getText().toString()
-                        .trim().toLowerCase());
+                        .trim());
                 query.whereNotContainedIn(Keys.OBJECT_ID_STR,
                         getArguments().getStringArrayList(Keys.EXTRA_FRIENDS_LIST));
                 query.whereNotEqualTo(Keys.OBJECT_ID_STR, ParseUser.getCurrentUser()
                         .getObjectId());
+                query.setLimit(20);
                 query.findInBackground(new FindCallback<ParseUser>() {
                     @Override
                     public void done(List<ParseUser> list, ParseException e) {
                         mSearchList = list;
-                        if (list != null) {
+                        if (list != null && e == null) {
                             SelectUserAdapter adapter = new SelectUserAdapter(dialog);
                             listView.setAdapter(adapter);
-                        } else if (e != null) {
 
-                        } else {
+                            if (list.size() > 0) {
+                                mView.findViewById(R.id.empty_list).setVisibility(View.GONE);
+                            } else {
+                                mView.findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
+                            }
+                        } else if (e != null) {
                             Helpers.showDialog("Whoops", "" + e.getCode(), getActivity());
                         }
                     }

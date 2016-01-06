@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/dark_grey">
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/dark_grey">
 
-    <ListView
-        android:id="@+id/game_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="0dp" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/game_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="0dp">
+        </ListView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:id="@+id/empty_list"
@@ -33,7 +41,7 @@
                 android:paddingStart="4dp"
                 android:text="01"
                 android:textColor="@color/line_number_text"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/games_null"
@@ -42,7 +50,7 @@
                 android:background="@color/dark_grey"
                 android:paddingStart="8dp"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
 
@@ -60,7 +68,7 @@
                 android:paddingStart="4dp"
                 android:text="02"
                 android:textColor="@color/line_number_text"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/line_1"
@@ -68,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +93,7 @@
                 android:paddingStart="4dp"
                 android:text="03"
                 android:textColor="@color/line_number_text"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/line_2"
@@ -93,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="8dp"
                 android:textColor="@color/text_light_grey"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -110,9 +118,16 @@
                 android:paddingStart="4dp"
                 android:text="04"
                 android:textColor="@color/line_number_text"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
         </LinearLayout>
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
     <com.software.shell.fab.ActionButton
         android:id="@+id/action_button"
@@ -124,7 +139,6 @@
         android:layout_marginEnd="12dp"
         fab:button_color="@color/action_bar_color"
         fab:image="@drawable/ic_plus_white_36dp"
-        fab:shadow_color="@color/dark_grey" />
-
+        fab:shadow_color="@color/dark_grey"/>
 
 </RelativeLayout>

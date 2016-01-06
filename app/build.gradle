@@ -32,4 +32,5 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile files('libs/JavaPrettify-1.2.1.jar')
     compile 'net.danlew:android.joda:2.9.0'
+    compile 'com.google.code.gson:gson:2.5'
 }

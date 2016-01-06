@@ -12,7 +12,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.GetCallback;
@@ -43,6 +45,7 @@ public class FriendsFragment extends Fragment {
     private FriendsAdapter mAdapter;
     private Fragment mFragment;
     private ActionButton mAddFriend;
+    private ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedState) {
@@ -60,12 +63,17 @@ public class FriendsFragment extends Fragment {
         setListeners();
     }
 
+    public void addObjectToList(ParseObject object) {
+        mAdapter.addItem(object);
+    }
+
     public void defaultValues() {
         if (mFragment == null) {
             mFragment = this;
         }
         mFont = Typeface.createFromAsset(getActivity().getAssets(), "source_code_pro_regular.ttf");
         mListView = (ListView) mView.findViewById(R.id.friends_list);
+        mProgressBar = (ProgressBar) mView.findViewById(R.id.progress);
 
         TextView emptyList = (TextView) mView.findViewById(R.id.empty_list);
         emptyList.setTypeface(mFont);
@@ -74,38 +82,56 @@ public class FriendsFragment extends Fragment {
         mAddFriend = (ActionButton) mView.findViewById(R.id.add_friend);
 
         // Full list includes friend requests
-        mFullList = new ArrayList<>();
 
-        mFriendsList = new ArrayList<>();
         mCurrentUser = ParseUser.getCurrentUser();
 
 
     }
+    public void showProgress() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mListView.setVisibility(View.GONE);
+        mView.findViewById(R.id.empty_list).setVisibility(View.GONE);
+    }
+
+    public void hideProgress() {
+        mProgressBar.setVisibility(View.GONE);
+        mListView.setVisibility(View.VISIBLE);
+        mView.findViewById(R.id.empty_list).setVisibility(View.VISIBLE);
+    }
 
     public void queryParse() {
+        mFullList = new ArrayList<>();
+
+        mFriendsList = new ArrayList<>();
         // TODO speed this query up by doing async
         mFriendsList = mCurrentUser.getList(Keys.FRIENDS_ARR);
 
         // TODO consider fetching user first to ensure it runs
         // Not guaranteed for else to finish fetch first. Test this
+        showProgress();
         mCurrentUser.fetchInBackground(new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
-                for (int i = 0; i < mFriendsList.size(); i++) {
-                    if (i == mFriendsList.size() - 1) {
-                        mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
-                            @Override
-                            public void done(ParseObject parseObject, ParseException e) {
-                                inviteQuery();
-                            }
-                        });
-                    } else {
-                        mFriendsList.get(i).fetchIfNeededInBackground();
+                if (e == null) {
+                    for (int i = 0; i < mFriendsList.size(); i++) {
+                        if (i == mFriendsList.size() - 1) {
+                            mFriendsList.get(i).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject parseObject, ParseException e) {
+                                    inviteQuery();
+                                }
+                            });
+                        } else {
+                            mFriendsList.get(i).fetchIfNeededInBackground();
+                        }
                     }
-                }
 
-                if (mFriendsList.size() == 0) {
-                    inviteQuery();
+                    if (mFriendsList.size() == 0) {
+                        inviteQuery();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    hideProgress();
                 }
             }
         });
@@ -120,6 +146,7 @@ public class FriendsFragment extends Fragment {
         inviteQuery.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                hideProgress();
                 if (e == null) {
                     mFullList.addAll(list);
                     mFullList.addAll(mFriendsList);
@@ -146,12 +173,15 @@ public class FriendsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 if (mFullList.get(i).getClassName().equals(Keys.KEY_FRIEND_REQUEST)) {
-                    AcceptFriendDialog dialog = new AcceptFriendDialog(getActivity());
                     Bundle extras = new Bundle();
                     extras.putString(Keys.EXTRA_GAME_OBJ_ID,
                             ((ParseObject) mFullList.get(i)
                                     .get(Keys.FROM_USER_POINT)).getObjectId());
-                    dialog.setArguments(extras);
+                    extras.putString("FriendRequest", mFullList.get(i).getObjectId());
+
+                    AcceptFriendDialog dialog = AcceptFriendDialog.newInstance(extras);
+
+                    dialog.setTargetFragment(mFragment, 0);
                     dialog.show(getFragmentManager(), null);
                 }
             }
@@ -190,9 +220,15 @@ public class FriendsFragment extends Fragment {
             return mList.get(i);
         }
 
+
         @Override
         public long getItemId(int i) {
             return 0;
+        }
+
+        public void addItem(ParseObject object) {
+            mList.add(object);
+            notifyDataSetChanged();
         }
 
         @Override
